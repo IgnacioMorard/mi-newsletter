@@ -7,6 +7,11 @@ async function cargarNoticias() {
   return await resp.json();
 }
 
+// Registrar plugin de datalabels si está disponible
+if (window.ChartDataLabels) {
+  Chart.register(window.ChartDataLabels);
+}
+
 function signLabel(p, thr){
   if (p > thr) return 'positiva';
   if (p < -thr) return 'negativa';
@@ -130,12 +135,27 @@ function dimColor(hex, alpha){
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+function pieDatalabelsOptions(labels, data){
+  const total = data.reduce((a,b)=>a+b,0) || 1;
+  return {
+    color: '#111',
+    font: { weight: '600', size: 11 },
+    formatter: (value, ctx) => {
+      const pct = (value/total*100).toFixed(1);
+      return `${value} (${pct}%)`;
+    },
+    clamp: true,
+    clip: true,
+    padding: 4
+  };
+}
+
 function graficar(noticias) {
   destruirGraficos();
 
   const groupBy = document.getElementById('groupBy').value;
 
-  // === Relevancia (pie con cross-filter + sombreado) ===
+  // === Relevancia (pie con cross-filter + sombreado + % y conteo) ===
   const conteoRel = { alta: 0, media: 0, baja: 0 };
   const coloresRel = { alta: "#e74c3c", media: "#f1c40f", baja: "#2ecc71" };
   noticias.forEach(n => {
@@ -155,7 +175,13 @@ function graficar(noticias) {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
-        tooltip: { bodyFont: { size: 11 } },
+        tooltip: { callbacks: { label: (ctx) => {
+          const total = relData.reduce((a,b)=>a+b,0) || 1;
+          const val = ctx.parsed;
+          const pct = (val/total*100).toFixed(1);
+          return `${ctx.label}: ${val} (${pct}%)`;
+        }} },
+        datalabels: pieDatalabelsOptions(relLabels, relData)
       },
       layout: { padding: 0 },
       onClick: (evt, elems) => {
@@ -168,7 +194,7 @@ function graficar(noticias) {
     }
   });
 
-  // === Connotación (pie por signo con cross-filter + sombreado) ===
+  // === Connotación (pie por signo con cross-filter + sombreado + % y conteo) ===
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
   const coloresCon = { positiva:"#2ecc71", negativa:"#e74c3c", neutral:"#95a5a6" };
   noticias.forEach(n => { conteoCon[n._signo]++; });
@@ -185,7 +211,13 @@ function graficar(noticias) {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
-        tooltip: { bodyFont: { size: 11 } },
+        tooltip: { callbacks: { label: (ctx) => {
+          const total = conData.reduce((a,b)=>a+b,0) || 1;
+          const val = ctx.parsed;
+          const pct = (val/total*100).toFixed(1);
+          return `${ctx.label}: ${val} (${pct}%)`;
+        }} },
+        datalabels: pieDatalabelsOptions(conLabels, conData)
       },
       layout: { padding: 0 },
       onClick: (evt, elems) => {

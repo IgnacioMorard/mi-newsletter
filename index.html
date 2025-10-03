@@ -6,6 +6,7 @@
   <title>Dashboard de Noticias</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
 <body>
   <header>
@@ -71,19 +72,19 @@
   </section>
 
   <section id="graficos">
-    <div class="grafico-container">
+    <div class="grafico-container pie">
       <h2>Relevancia</h2>
       <canvas id="graficoRelevancia"></canvas>
     </div>
-    <div class="grafico-container">
+    <div class="grafico-container pie">
       <h2>Connotación (según polaridad y umbral)</h2>
       <canvas id="graficoConnotacion"></canvas>
     </div>
-    <div class="grafico-container alto">
+    <div class="grafico-container wide">
       <h2>Tendencia por polaridad (% por fecha)</h2>
       <canvas id="graficoTemporal"></canvas>
     </div>
-    <div class="grafico-container alto">
+    <div class="grafico-container wide">
       <h2>Polaridad promedio por fecha (−1 a 1)</h2>
       <canvas id="graficoPolaridadProm"></canvas>
     </div>

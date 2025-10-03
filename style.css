@@ -86,12 +86,15 @@ header p{margin:.2rem 0 0; color:#e9eef3}
   padding: 1rem;
   border-radius: 12px;
   box-shadow: var(--shadow);
-  height: 360px; /* altura fija para evitar estiramiento infinito */
   display:flex;
   flex-direction:column;
-  overflow:hidden; /* contener leyendas/canvas */
+  overflow:hidden;
+  min-height: 260px;
 }
-.grafico-container.alto{ height: 420px; }
+/* Contenedores responsivos según tipo */
+.grafico-container.pie { aspect-ratio: 1 / 1; }
+.grafico-container.wide { aspect-ratio: 16 / 9; }
+
 .grafico-container h2{
   margin:.2rem 0 .6rem;
   font-size:1.02rem;
@@ -137,6 +140,6 @@ footer {
 /* Mobile tweaks */
 @media (max-width: 520px){
   header h1{font-size:1.25rem}
-  .grafico-container{height:320px}
-  .grafico-container.alto{height:360px}
+  .grafico-container.pie { aspect-ratio: 1 / 1; }
+  .grafico-container.wide { aspect-ratio: 4 / 3; }
 }
