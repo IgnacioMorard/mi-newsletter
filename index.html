@@ -2,39 +2,48 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Newsletter de Noticias</title>
+  <title>Dashboard de Noticias</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
-    <h1>📰 Newsletter de Noticias</h1>
-    <p>Explorá las noticias procesadas con filtros y gráficos</p>
+    <h1>📊 Dashboard de Noticias</h1>
   </header>
 
   <section id="filtros">
     <label for="filtroFuente">Fuente:</label>
-    <select id="filtroFuente">
-      <option value="">Todas</option>
-    </select>
+    <select id="filtroFuente"><option value="">Todas</option></select>
 
     <label for="filtroTema">Tema:</label>
-    <select id="filtroTema">
-      <option value="">Todos</option>
-    </select>
+    <select id="filtroTema"><option value="">Todos</option></select>
+
+    <label for="fechaInicio">Desde:</label>
+    <input type="date" id="fechaInicio">
+
+    <label for="fechaFin">Hasta:</label>
+    <input type="date" id="fechaFin">
   </section>
 
   <section id="graficos">
-    <h2>Distribución por Relevancia</h2>
-    <canvas id="graficoRelevancia"></canvas>
+    <div class="grafico-container">
+      <h2>Relevancia</h2>
+      <canvas id="graficoRelevancia"></canvas>
+    </div>
+    <div class="grafico-container">
+      <h2>Connotación</h2>
+      <canvas id="graficoConnotacion"></canvas>
+    </div>
+    <div class="grafico-container">
+      <h2>Tendencia temporal</h2>
+      <canvas id="graficoTemporal"></canvas>
+    </div>
   </section>
 
-  <section id="noticias">
-    <!-- Noticias se cargarán aquí -->
-  </section>
+  <section id="noticias"></section>
 
   <footer>
-    <p>Generado automáticamente con datos en JSON 📊</p>
+    <p>Generado automáticamente con datos en JSON 📑</p>
   </footer>
 
   <script src="app.js"></script>

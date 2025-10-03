@@ -1,20 +1,31 @@
+let noticiasGlobal = [];
+let charts = {};
+
 async function cargarNoticias() {
   const resp = await fetch("noticias_enriquecidas.json");
   return await resp.json();
 }
 
-function renderNoticias(noticias, filtroFuente = "", filtroTema = "") {
-  const contenedor = document.getElementById("noticias");
-  contenedor.innerHTML = "";
+function aplicarFiltros() {
+  const selFuente = document.getElementById("filtroFuente").value;
+  const selTema = document.getElementById("filtroTema").value;
+  const fechaInicio = document.getElementById("fechaInicio").value;
+  const fechaFin = document.getElementById("fechaFin").value;
 
-  const filtradas = noticias.filter(n => {
+  return noticiasGlobal.filter(n => {
     let ok = true;
-    if (filtroFuente && n.Fuente !== filtroFuente) ok = false;
-    if (filtroTema && n.Tema !== filtroTema) ok = false;
+    if (selFuente && n.Fuente !== selFuente) ok = false;
+    if (selTema && n.Tema !== selTema) ok = false;
+    if (fechaInicio && n.Fecha < fechaInicio) ok = false;
+    if (fechaFin && n.Fecha > fechaFin) ok = false;
     return ok;
   });
+}
 
-  filtradas.forEach(n => {
+function renderNoticias(noticias) {
+  const contenedor = document.getElementById("noticias");
+  contenedor.innerHTML = "";
+  noticias.forEach(n => {
     const card = document.createElement("div");
     card.className = "noticia";
     card.innerHTML = `
@@ -29,18 +40,45 @@ function renderNoticias(noticias, filtroFuente = "", filtroTema = "") {
 }
 
 function graficar(noticias) {
-  const ctx = document.getElementById("graficoRelevancia").getContext("2d");
-  const conteo = { alta: 0, media: 0, baja: 0 };
-  noticias.forEach(n => conteo[n.Relevancia]++);
+  // destruir gráficos previos
+  Object.values(charts).forEach(c => c.destroy());
 
-  new Chart(ctx, {
+  // Relevancia
+  const conteoRel = { alta: 0, media: 0, baja: 0 };
+  noticias.forEach(n => conteoRel[n.Relevancia]++);
+  charts.relevancia = new Chart(document.getElementById("graficoRelevancia"), {
     type: 'pie',
+    data: { labels: Object.keys(conteoRel), datasets: [{ data: Object.values(conteoRel), backgroundColor: ["#e74c3c","#f1c40f","#2ecc71"] }] }
+  });
+
+  // Connotación
+  const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
+  noticias.forEach(n => conteoCon[n.Connotacion]++);
+  charts.connotacion = new Chart(document.getElementById("graficoConnotacion"), {
+    type: 'pie',
+    data: { labels: Object.keys(conteoCon), datasets: [{ data: Object.values(conteoCon), backgroundColor: ["#2ecc71","#e74c3c","#95a5a6"] }] }
+  });
+
+  // Temporal
+  const agrupado = {};
+  noticias.forEach(n => {
+    if (!agrupado[n.Fecha]) agrupado[n.Fecha] = { positiva:0, negativa:0, neutral:0 };
+    agrupado[n.Fecha][n.Connotacion]++;
+  });
+  const fechas = Object.keys(agrupado).sort();
+  const positivas = fechas.map(f => agrupado[f].positiva);
+  const negativas = fechas.map(f => agrupado[f].negativa);
+  const neutrales = fechas.map(f => agrupado[f].neutral);
+
+  charts.temporal = new Chart(document.getElementById("graficoTemporal"), {
+    type: 'line',
     data: {
-      labels: Object.keys(conteo),
-      datasets: [{
-        data: Object.values(conteo),
-        backgroundColor: ["#e74c3c", "#f1c40f", "#2ecc71"]
-      }]
+      labels: fechas,
+      datasets: [
+        { label: "Positivas", data: positivas, borderColor: "#2ecc71", fill: false },
+        { label: "Negativas", data: negativas, borderColor: "#e74c3c", fill: false },
+        { label: "Neutrales", data: neutrales, borderColor: "#95a5a6", fill: false }
+      ]
     }
   });
 }
@@ -48,20 +86,25 @@ function graficar(noticias) {
 function cargarFiltros(noticias) {
   const fuentes = [...new Set(noticias.map(n => n.Fuente))];
   const temas = [...new Set(noticias.map(n => n.Tema))];
-
   const selFuente = document.getElementById("filtroFuente");
   const selTema = document.getElementById("filtroTema");
-
   fuentes.forEach(f => selFuente.innerHTML += `<option value="${f}">${f}</option>`);
   temas.forEach(t => selTema.innerHTML += `<option value="${t}">${t}</option>`);
 
-  selFuente.onchange = () => renderNoticias(noticias, selFuente.value, selTema.value);
-  selTema.onchange = () => renderNoticias(noticias, selFuente.value, selTema.value);
+  // aplicar cambios en filtros
+  [selFuente, selTema, document.getElementById("fechaInicio"), document.getElementById("fechaFin")].forEach(el => {
+    el.onchange = actualizarDashboard;
+  });
+}
+
+function actualizarDashboard() {
+  const filtradas = aplicarFiltros();
+  renderNoticias(filtradas);
+  graficar(filtradas);
 }
 
 window.onload = async () => {
-  const noticias = await cargarNoticias();
-  cargarFiltros(noticias);
-  renderNoticias(noticias);
-  graficar(noticias);
+  noticiasGlobal = await cargarNoticias();
+  cargarFiltros(noticiasGlobal);
+  actualizarDashboard();
 };
