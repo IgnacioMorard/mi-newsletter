@@ -135,18 +135,36 @@ function dimColor(hex, alpha){
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-function pieDatalabelsOptions(labels, data){
+function pieDatalabelsOptions(data){
   const total = data.reduce((a,b)=>a+b,0) || 1;
   return {
     color: '#111',
+    textStrokeColor: '#fff',
+    textStrokeWidth: 2,
     font: { weight: '600', size: 11 },
-    formatter: (value, ctx) => {
+    formatter: (value) => {
       const pct = (value/total*100).toFixed(1);
       return `${value} (${pct}%)`;
     },
     clamp: true,
     clip: true,
     padding: 4
+  };
+}
+
+function topNCounts(arr, key, n=5){
+  const map = new Map();
+  arr.forEach(o => {
+    const k = (o[key] ?? '').toString().trim();
+    if (!k) return;
+    map.set(k, (map.get(k) || 0) + 1);
+  });
+  const pairs = Array.from(map.entries()).sort((a,b)=>b[1]-a[1]).slice(0,n);
+  const total = arr.length || 1;
+  return {
+    labels: pairs.map(p=>p[0]),
+    counts: pairs.map(p=>p[1]),
+    percents: pairs.map(p=>+(p[1]/total*100).toFixed(1))
   };
 }
 
@@ -181,9 +199,9 @@ function graficar(noticias) {
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
-        datalabels: pieDatalabelsOptions(relLabels, relData)
+        datalabels: pieDatalabelsOptions(relData)
       },
-      layout: { padding: 0 },
+      layout: { padding: {top:0, right:0, bottom:0, left:0} },
       onClick: (evt, elems) => {
         if (!elems.length) { cross.relevancia = null; actualizarDashboard(); return; }
         const idx = elems[0].index;
@@ -217,9 +235,9 @@ function graficar(noticias) {
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
-        datalabels: pieDatalabelsOptions(conLabels, conData)
+        datalabels: pieDatalabelsOptions(conData)
       },
-      layout: { padding: 0 },
+      layout: { padding: {top:0, right:0, bottom:0, left:0} },
       onClick: (evt, elems) => {
         if (!elems.length) { cross.connotacion = null; actualizarDashboard(); return; }
         const idx = elems[0].index;
@@ -229,6 +247,92 @@ function graficar(noticias) {
       }
     }
   });
+
+  // === Top 5 Fuentes (horizontal) ===
+  {
+    const topF = topNCounts(noticias, 'Fuente', 5);
+    charts.topFuentes = new Chart(document.getElementById('graficoTopFuentes'), {
+      type: 'bar',
+      data: {
+        labels: topF.labels,
+        datasets: [{
+          label: 'Noticias',
+          data: topF.counts,
+          backgroundColor: "#3498db"
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx) => {
+            const i = ctx.dataIndex;
+            return `${ctx.formattedValue} (${topF.percents[i]}%)`;
+          } } },
+          datalabels: {
+            anchor: 'end', align: 'right',
+            formatter: (v, ctx) => `${v} (${topF.percents[ctx.dataIndex]}%)`,
+            color: '#111', font: { weight:'600', size: 11 }, clamp:true, clip:true
+          }
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { precision:0 } }
+        },
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          const val = topF.labels[idx];
+          const sel = document.getElementById('filtroFuente');
+          sel.value = sel.value === val ? '' : val;
+          actualizarDashboard();
+        }
+      }
+    });
+  }
+
+  // === Top 5 Temas (horizontal) ===
+  {
+    const topT = topNCounts(noticias, 'Tema', 5);
+    charts.topTemas = new Chart(document.getElementById('graficoTopTemas'), {
+      type: 'bar',
+      data: {
+        labels: topT.labels,
+        datasets: [{
+          label: 'Noticias',
+          data: topT.counts,
+          backgroundColor: "#9b59b6"
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx) => {
+            const i = ctx.dataIndex;
+            return `${ctx.formattedValue} (${topT.percents[i]}%)`;
+          } } },
+          datalabels: {
+            anchor: 'end', align: 'right',
+            formatter: (v, ctx) => `${v} (${topT.percents[ctx.dataIndex]}%)`,
+            color: '#111', font: { weight:'600', size: 11 }, clamp:true, clip:true
+          }
+        },
+        scales: {
+          x: { beginAtZero: true, ticks: { precision:0 } }
+        },
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          const val = topT.labels[idx];
+          const sel = document.getElementById('filtroTema');
+          sel.value = sel.value === val ? '' : val;
+          actualizarDashboard();
+        }
+      }
+    });
+  }
 
   // === Temporal (100% apiladas por signo) con click por fecha ===
   const porFecha = {};
@@ -281,7 +385,7 @@ function graficar(noticias) {
     }
   });
 
-  // === Polaridad promedio por fecha (línea −1..1) ===
+  // === Polaridad promedio por fecha (línea −1..1, centrada incluso con 1 punto) ===
   const polPorFecha = {};
   noticias.forEach(n => {
     const key = keyForGroup(n.Fecha, groupBy);
@@ -291,26 +395,47 @@ function graficar(noticias) {
     polPorFecha[key].suma += p;
     polPorFecha[key].cant += 1;
   });
-  const fechasPol = Object.keys(polPorFecha).sort();
-  const polAvg = fechasPol.map(f => +(polPorFecha[f].suma / polPorFecha[f].cant).toFixed(3));
+  const labelsPol = Object.keys(polPorFecha).sort();
+  const polAvgVals = labelsPol.map(f => +(polPorFecha[f].suma / polPorFecha[f].cant).toFixed(3));
+  const dataPoints = polAvgVals.map((y, i) => ({ x: i, y }));
+  const npts = dataPoints.length;
+  const minX = -0.5;
+  const maxX = (npts === 1) ? 0.5 : (npts - 0.5);
 
   const lineColor = cross.dateKey ? dimColor("#8e44ad", 0.6) : "#8e44ad";
 
   charts.polaridadProm = new Chart(document.getElementById("graficoPolaridadProm"), {
     type: 'line',
     data: {
-      labels: fechasPol,
       datasets: [{
         label: "Polaridad promedio (−1 a 1)",
-        data: polAvg,
+        data: dataPoints,
         borderColor: lineColor,
+        pointBackgroundColor: lineColor,
+        pointRadius: 3,
         fill: false,
         tension: .2
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
-      scales: { y: { suggestedMin: -1, suggestedMax: 1 } },
+      scales: {
+        x: {
+          type: 'linear',
+          min: minX,
+          max: maxX,
+          ticks: {
+            callback: (value) => {
+              const i = Math.round(value);
+              return (i >= 0 && i < labelsPol.length) ? labelsPol[i] : '';
+            },
+            autoSkip: true,
+            maxTicksLimit: 8
+          },
+          grid: { display: false }
+        },
+        y: { suggestedMin: -1, suggestedMax: 1 }
+      },
       plugins: { legend: { labels: { font: { size: 11 } } } },
       layout: { padding: 0 }
     }
