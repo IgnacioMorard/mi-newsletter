@@ -95,38 +95,51 @@ function graficar(noticias) {
     options: { responsive: true, maintainAspectRatio: false }
   });
 
-  // === Temporal por connotación (conteo) ===
-  const agrupado = {};
+  
+  // === Temporal por polaridad (100% apiladas) ===
+  const porFecha = {};
   noticias.forEach(n => {
     const fecha = n.Fecha;
-    const con = normalizarConnotacion(n.Connotacion);
-    if (!agrupado[fecha]) agrupado[fecha] = { positiva:0, negativa:0, neutral:0 };
-    agrupado[fecha][con]++;
+    const p = Number(n.Polaridad) || 0;
+    if (!porFecha[fecha]) porFecha[fecha] = { pos:0, neg:0, neu:0, total:0 };
+    if (p > 0) porFecha[fecha].pos += 1;
+    else if (p < 0) porFecha[fecha].neg += 1;
+    else porFecha[fecha].neu += 1;
+    porFecha[fecha].total += 1;
   });
-  const fechas = Object.keys(agrupado).sort();
-  const positivas = fechas.map(f => agrupado[f].positiva);
-  const negativas = fechas.map(f => agrupado[f].negativa);
-  const neutrales = fechas.map(f => agrupado[f].neutral);
+  const fechas = Object.keys(porFecha).sort();
+  const pctPos = fechas.map(f => porFecha[f].total ? +(porFecha[f].pos/porFecha[f].total*100).toFixed(2) : 0);
+  const pctNeg = fechas.map(f => porFecha[f].total ? +(porFecha[f].neg/porFecha[f].total*100).toFixed(2) : 0);
+  const pctNeu = fechas.map(f => porFecha[f].total ? +(porFecha[f].neu/porFecha[f].total*100).toFixed(2) : 0);
 
   charts.temporal = new Chart(document.getElementById("graficoTemporal"), {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: fechas,
       datasets: [
-        { label: "Positivas", data: positivas, borderColor: "#2ecc71", fill: false, tension: .2 },
-        { label: "Negativas", data: negativas, borderColor: "#e74c3c", fill: false, tension: .2 },
-        { label: "Neutrales", data: neutrales, borderColor: "#95a5a6", fill: false, tension: .2 }
+        { label: "Positiva", data: pctPos, backgroundColor: "#2ecc71", stack: "polaridad" },
+        { label: "Neutral",  data: pctNeu, backgroundColor: "#95a5a6", stack: "polaridad" },
+        { label: "Negativa", data: pctNeg, backgroundColor: "#e74c3c", stack: "polaridad" }
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: true } },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%`
+          }
+        },
+        legend: { display: true }
+      },
       scales: {
-        x: { ticks: { autoSkip: true, maxTicksLimit: 8 } },
-        y: { beginAtZero: true, precision: 0 }
+        x: { stacked: true, ticks: { autoSkip: true, maxTicksLimit: 8 } },
+        y: { stacked: true, beginAtZero: true, max: 100,
+             ticks: { callback: (v) => v + "%" } }
       }
     }
   });
+
 
   // === Polaridad promedio por fecha ===
   const polPorFecha = {};
