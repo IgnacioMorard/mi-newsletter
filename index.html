@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>📊 Dashboard de Noticias</h1>
-    <p>Filtros globales + layout responsive con columnas lado a lado si hay espacio</p>
+    <p>Filtros globales y cruzados — layout responsive</p>
   </header>
 
   <section id="filtros">
@@ -57,25 +57,17 @@
       <label for="umbral">Umbral neutralidad (|p|)</label>
       <input type="number" id="umbral" step="0.01" min="0" max="1" value="0.05">
     </div>
+
+    <div class="filtro-item">
+      <button id="btnLimpiar" type="button">Limpiar filtros cruzados</button>
+    </div>
   </section>
 
   <section id="kpis">
-    <div class="kpi">
-      <div class="kpi-title">Noticias</div>
-      <div class="kpi-value" id="kpiTotal">-</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-title">% Positivas</div>
-      <div class="kpi-value" id="kpiPctPos">-</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-title">Polaridad Prom.</div>
-      <div class="kpi-value" id="kpiPolAvg">-</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-title">Polaridad Mediana</div>
-      <div class="kpi-value" id="kpiPolMed">-</div>
-    </div>
+    <div class="kpi"><div class="kpi-title">Noticias</div><div class="kpi-value" id="kpiTotal">-</div></div>
+    <div class="kpi"><div class="kpi-title">% Positivas</div><div class="kpi-value" id="kpiPctPos">-</div></div>
+    <div class="kpi"><div class="kpi-title">Polaridad Prom.</div><div class="kpi-value" id="kpiPolAvg">-</div></div>
+    <div class="kpi"><div class="kpi-title">Polaridad Mediana</div><div class="kpi-value" id="kpiPolMed">-</div></div>
   </section>
 
   <section id="graficos">
