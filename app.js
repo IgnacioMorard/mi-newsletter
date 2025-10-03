@@ -6,23 +6,15 @@ async function cargarNoticias() {
   return await resp.json();
 }
 
-function normConnotacion(v){
-  const s = (v ?? '').toString().trim().toLowerCase();
-  if (s === 'positiva' || s === 'negativa' || s === 'neutral') return s;
+function signLabel(p, thr){
+  if (p > thr) return 'positiva';
+  if (p < -thr) return 'negativa';
   return 'neutral';
 }
 function normRelevancia(v){
   const s = (v ?? '').toString().trim().toLowerCase();
   if (s === 'alta' || s === 'media' || s === 'baja') return s;
   return 'baja';
-}
-
-function getConnotationFilters(){
-  return {
-    positiva: document.getElementById('chkPos').checked,
-    neutral:  document.getElementById('chkNeu').checked,
-    negativa: document.getElementById('chkNeg').checked,
-  };
 }
 
 function keyForGroup(dateStr, groupBy){
@@ -39,12 +31,27 @@ function keyForGroup(dateStr, groupBy){
   return `${y}-W${ww}`;
 }
 
+function aplicarVentanaFechas(noticias){
+  const ventana = document.getElementById('ventana').value;
+  if (ventana === 'all') return;
+  const maxDate = noticias.reduce((acc, n) => acc > n.Fecha ? acc : n.Fecha, '0000-00-00');
+  const d = new Date(maxDate + 'T00:00:00');
+  const days = parseInt(ventana, 10);
+  const start = new Date(d);
+  start.setDate(d.getDate() - (days - 1));
+  const y = start.getFullYear();
+  const m = String(start.getMonth()+1).padStart(2,'0');
+  const dd = String(start.getDate()).padStart(2,'0');
+  document.getElementById('fechaInicio').value = `${y}-${m}-${dd}`;
+  document.getElementById('fechaFin').value = maxDate;
+}
+
 function aplicarFiltros() {
   const selFuente = document.getElementById("filtroFuente").value;
   const selTema = document.getElementById("filtroTema").value;
   const fechaInicio = document.getElementById("fechaInicio").value;
   const fechaFin = document.getElementById("fechaFin").value;
-  const conFilt = getConnotationFilters();
+  const umbral = Number(document.getElementById('umbral').value) || 0.05;
 
   return noticiasGlobal.filter(n => {
     let ok = true;
@@ -52,10 +59,11 @@ function aplicarFiltros() {
     if (selTema && n.Tema !== selTema) ok = false;
     if (fechaInicio && n.Fecha < fechaInicio) ok = false;
     if (fechaFin && n.Fecha > fechaFin) ok = false;
-    const c = normConnotacion(n.Connotacion);
-    if (!conFilt[c]) ok = false;
     return ok;
-  });
+  }).map(n => ({
+    ...n,
+    _signo: signLabel(Number(n.Polaridad)||0, umbral)
+  }));
 }
 
 function renderNoticias(noticias) {
@@ -64,13 +72,10 @@ function renderNoticias(noticias) {
   noticias.forEach(n => {
     const card = document.createElement("div");
     card.className = "noticia";
-    const con = normConnotacion(n.Connotacion);
     card.innerHTML = `
       <h2><a href="${n.Link}" target="_blank" rel="noopener noreferrer">${n.Título}</a></h2>
       <p><strong>Fecha:</strong> ${n.Fecha}</p>
       <p><strong>Fuente:</strong> ${n.Fuente} | <strong>Tema:</strong> ${n.Tema ?? "-"}</p>
-      <p><strong>Relevancia:</strong> ${normRelevancia(n.Relevancia)} |
-         <strong>Connotación:</strong> ${con} (${Number(n.Polaridad).toFixed(3)})</p>
     `;
     contenedor.appendChild(card);
   });
@@ -79,6 +84,25 @@ function renderNoticias(noticias) {
 function destruirGraficos(){
   Object.values(charts).forEach(c => { try{ c.destroy(); }catch(_){} });
   charts = {};
+}
+
+function calcKPIs(noticias){
+  const total = noticias.length;
+  const pols = noticias.map(n => Number(n.Polaridad)).filter(v => !isNaN(v));
+  const avg = pols.length ? (pols.reduce((a,b)=>a+b,0)/pols.length) : 0;
+  const sorted = [...pols].sort((a,b)=>a-b);
+  let med = 0;
+  if (sorted.length){
+    const mid = Math.floor(sorted.length/2);
+    med = sorted.length % 2 ? sorted[mid] : (sorted[mid-1]+sorted[mid])/2;
+  }
+  const pos = noticias.filter(n => n._signo === 'positiva').length;
+  const pctPos = total ? (pos/total*100) : 0;
+
+  document.getElementById('kpiTotal').textContent = total;
+  document.getElementById('kpiPctPos').textContent = pctPos.toFixed(1) + '%';
+  document.getElementById('kpiPolAvg').textContent = avg.toFixed(3);
+  document.getElementById('kpiPolMed').textContent = med.toFixed(3);
 }
 
 function graficar(noticias) {
@@ -102,12 +126,9 @@ function graficar(noticias) {
     options: { responsive: true, maintainAspectRatio: false }
   });
 
-  // === Connotación ===
+  // === Connotación (por signo de polaridad y umbral) ===
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
-  noticias.forEach(n => {
-    const c = normConnotacion(n.Connotacion);
-    conteoCon[c]++;
-  });
+  noticias.forEach(n => { conteoCon[n._signo]++; });
   charts.connotacion = new Chart(document.getElementById("graficoConnotacion"), {
     type: 'pie',
     data: {
@@ -120,15 +141,14 @@ function graficar(noticias) {
     options: { responsive: true, maintainAspectRatio: false }
   });
 
-  // === Temporal por polaridad (100% apiladas, por signo de Polaridad) ===
+  // === Temporal (100% apiladas por signo) ===
   const groupBy = document.getElementById('groupBy').value;
   const porFecha = {};
   noticias.forEach(n => {
     const key = keyForGroup(n.Fecha, groupBy);
-    const p = Number(n.Polaridad) || 0;
     if (!porFecha[key]) porFecha[key] = { pos:0, neg:0, neu:0, total:0 };
-    if (p > 0) porFecha[key].pos += 1;
-    else if (p < 0) porFecha[key].neg += 1;
+    if (n._signo === 'positiva') porFecha[key].pos += 1;
+    else if (n._signo === 'negativa') porFecha[key].neg += 1;
     else porFecha[key].neu += 1;
     porFecha[key].total += 1;
   });
@@ -201,15 +221,20 @@ function cargarFiltros(noticias) {
   fuentes.forEach(f => selFuente.innerHTML += `<option value="${f}">${f}</option>`);
   temas.forEach(t => selTema.innerHTML += `<option value="${t}">${t}</option>`);
 
-  [selFuente, selTema, document.getElementById("fechaInicio"), document.getElementById("fechaFin"),
-   document.getElementById("chkPos"), document.getElementById("chkNeu"), document.getElementById("chkNeg"),
-   document.getElementById("groupBy")]
-    .forEach(el => el.onchange = actualizarDashboard);
+  ['filtroFuente','filtroTema','fechaInicio','fechaFin','groupBy','ventana','umbral'].forEach(id => {
+    document.getElementById(id).onchange = actualizarDashboard;
+  });
+  // Aplicar ventana al inicio si se elige diferente de 'all'
+  document.getElementById('ventana').onchange = () => {
+    aplicarVentanaFechas(noticiasGlobal);
+    actualizarDashboard();
+  };
 }
 
 function actualizarDashboard() {
   const filtradas = aplicarFiltros();
   renderNoticias(filtradas);
+  calcKPIs(filtradas);
   graficar(filtradas);
 }
 
