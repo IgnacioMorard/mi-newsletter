@@ -6,15 +6,37 @@ async function cargarNoticias() {
   return await resp.json();
 }
 
-function normalizarConnotacion(v){
+function normConnotacion(v){
   const s = (v ?? '').toString().trim().toLowerCase();
   if (s === 'positiva' || s === 'negativa' || s === 'neutral') return s;
   return 'neutral';
 }
-function normalizarRelevancia(v){
+function normRelevancia(v){
   const s = (v ?? '').toString().trim().toLowerCase();
   if (s === 'alta' || s === 'media' || s === 'baja') return s;
   return 'baja';
+}
+
+function getConnotationFilters(){
+  return {
+    positiva: document.getElementById('chkPos').checked,
+    neutral:  document.getElementById('chkNeu').checked,
+    negativa: document.getElementById('chkNeg').checked,
+  };
+}
+
+function keyForGroup(dateStr, groupBy){
+  if (!dateStr) return '';
+  if (groupBy === 'day') return dateStr;
+  const d = new Date(dateStr + 'T00:00:00');
+  const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = tmp.getUTCDay() || 7;
+  tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(),0,1));
+  const weekNo = Math.ceil((((tmp - yearStart) / 86400000) + 1)/7);
+  const y = tmp.getUTCFullYear();
+  const ww = weekNo.toString().padStart(2,'0');
+  return `${y}-W${ww}`;
 }
 
 function aplicarFiltros() {
@@ -22,6 +44,7 @@ function aplicarFiltros() {
   const selTema = document.getElementById("filtroTema").value;
   const fechaInicio = document.getElementById("fechaInicio").value;
   const fechaFin = document.getElementById("fechaFin").value;
+  const conFilt = getConnotationFilters();
 
   return noticiasGlobal.filter(n => {
     let ok = true;
@@ -29,6 +52,8 @@ function aplicarFiltros() {
     if (selTema && n.Tema !== selTema) ok = false;
     if (fechaInicio && n.Fecha < fechaInicio) ok = false;
     if (fechaFin && n.Fecha > fechaFin) ok = false;
+    const c = normConnotacion(n.Connotacion);
+    if (!conFilt[c]) ok = false;
     return ok;
   });
 }
@@ -39,12 +64,12 @@ function renderNoticias(noticias) {
   noticias.forEach(n => {
     const card = document.createElement("div");
     card.className = "noticia";
-    const con = normalizarConnotacion(n.Connotacion);
+    const con = normConnotacion(n.Connotacion);
     card.innerHTML = `
       <h2><a href="${n.Link}" target="_blank" rel="noopener noreferrer">${n.Título}</a></h2>
       <p><strong>Fecha:</strong> ${n.Fecha}</p>
       <p><strong>Fuente:</strong> ${n.Fuente} | <strong>Tema:</strong> ${n.Tema ?? "-"}</p>
-      <p><strong>Relevancia:</strong> ${normalizarRelevancia(n.Relevancia)} |
+      <p><strong>Relevancia:</strong> ${normRelevancia(n.Relevancia)} |
          <strong>Connotación:</strong> ${con} (${Number(n.Polaridad).toFixed(3)})</p>
     `;
     contenedor.appendChild(card);
@@ -62,7 +87,7 @@ function graficar(noticias) {
   // === Relevancia ===
   const conteoRel = { alta: 0, media: 0, baja: 0 };
   noticias.forEach(n => {
-    const k = normalizarRelevancia(n.Relevancia);
+    const k = normRelevancia(n.Relevancia);
     if (k in conteoRel) conteoRel[k]++;
   });
   charts.relevancia = new Chart(document.getElementById("graficoRelevancia"), {
@@ -80,32 +105,32 @@ function graficar(noticias) {
   // === Connotación ===
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
   noticias.forEach(n => {
-    const c = normalizarConnotacion(n.Connotacion);
+    const c = normConnotacion(n.Connotacion);
     conteoCon[c]++;
   });
   charts.connotacion = new Chart(document.getElementById("graficoConnotacion"), {
     type: 'pie',
     data: {
-      labels: Object.keys(conteoCon),
+      labels: ["Positiva","Negativa","Neutral"],
       datasets: [{
-        data: Object.values(conteoCon),
+        data: [conteoCon.positiva, conteoCon.negativa, conteoCon.neutral],
         backgroundColor: ["#2ecc71","#e74c3c","#95a5a6"]
       }]
     },
     options: { responsive: true, maintainAspectRatio: false }
   });
 
-  
-  // === Temporal por polaridad (100% apiladas) ===
+  // === Temporal por polaridad (100% apiladas, por signo de Polaridad) ===
+  const groupBy = document.getElementById('groupBy').value;
   const porFecha = {};
   noticias.forEach(n => {
-    const fecha = n.Fecha;
+    const key = keyForGroup(n.Fecha, groupBy);
     const p = Number(n.Polaridad) || 0;
-    if (!porFecha[fecha]) porFecha[fecha] = { pos:0, neg:0, neu:0, total:0 };
-    if (p > 0) porFecha[fecha].pos += 1;
-    else if (p < 0) porFecha[fecha].neg += 1;
-    else porFecha[fecha].neu += 1;
-    porFecha[fecha].total += 1;
+    if (!porFecha[key]) porFecha[key] = { pos:0, neg:0, neu:0, total:0 };
+    if (p > 0) porFecha[key].pos += 1;
+    else if (p < 0) porFecha[key].neg += 1;
+    else porFecha[key].neu += 1;
+    porFecha[key].total += 1;
   });
   const fechas = Object.keys(porFecha).sort();
   const pctPos = fechas.map(f => porFecha[f].total ? +(porFecha[f].pos/porFecha[f].total*100).toFixed(2) : 0);
@@ -125,11 +150,7 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        tooltip: {
-          callbacks: {
-            label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%`
-          }
-        },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%` } },
         legend: { display: true }
       },
       scales: {
@@ -140,15 +161,15 @@ function graficar(noticias) {
     }
   });
 
-
-  // === Polaridad promedio por fecha ===
+  // === Polaridad promedio por fecha (línea −1..1) ===
   const polPorFecha = {};
   noticias.forEach(n => {
-    const f = n.Fecha;
-    const p = Number(n.Polaridad) || 0;
-    if (!polPorFecha[f]) polPorFecha[f] = { suma:0, cant:0 };
-    polPorFecha[f].suma += p;
-    polPorFecha[f].cant += 1;
+    const key = keyForGroup(n.Fecha, groupBy);
+    const p = Number(n.Polaridad);
+    if (isNaN(p)) return;
+    if (!polPorFecha[key]) polPorFecha[key] = { suma:0, cant:0 };
+    polPorFecha[key].suma += p;
+    polPorFecha[key].cant += 1;
   });
   const fechasPol = Object.keys(polPorFecha).sort();
   const polAvg = fechasPol.map(f => +(polPorFecha[f].suma / polPorFecha[f].cant).toFixed(3));
@@ -167,9 +188,7 @@ function graficar(noticias) {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      scales: {
-        y: { suggestedMin: -1, suggestedMax: 1 }
-      }
+      scales: { y: { suggestedMin: -1, suggestedMax: 1 } }
     }
   });
 }
@@ -182,7 +201,9 @@ function cargarFiltros(noticias) {
   fuentes.forEach(f => selFuente.innerHTML += `<option value="${f}">${f}</option>`);
   temas.forEach(t => selTema.innerHTML += `<option value="${t}">${t}</option>`);
 
-  [selFuente, selTema, document.getElementById("fechaInicio"), document.getElementById("fechaFin")]
+  [selFuente, selTema, document.getElementById("fechaInicio"), document.getElementById("fechaFin"),
+   document.getElementById("chkPos"), document.getElementById("chkNeu"), document.getElementById("chkNeg"),
+   document.getElementById("groupBy")]
     .forEach(el => el.onchange = actualizarDashboard);
 }
 

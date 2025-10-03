@@ -10,21 +10,44 @@
 <body>
   <header>
     <h1>📊 Dashboard de Noticias</h1>
-    <p>Explorá, filtrá y analizá tu set de noticias procesadas</p>
+    <p>Filtros globales + filtros por gráfico, layout responsive con columnas lado a lado si hay espacio</p>
   </header>
 
   <section id="filtros">
-    <label for="filtroFuente">Fuente:</label>
-    <select id="filtroFuente"><option value="">Todas</option></select>
+    <div class="filtro-item">
+      <label for="filtroFuente">Fuente</label>
+      <select id="filtroFuente"><option value="">Todas</option></select>
+    </div>
 
-    <label for="filtroTema">Tema:</label>
-    <select id="filtroTema"><option value="">Todos</option></select>
+    <div class="filtro-item">
+      <label for="filtroTema">Tema</label>
+      <select id="filtroTema"><option value="">Todos</option></select>
+    </div>
 
-    <label for="fechaInicio">Desde:</label>
-    <input type="date" id="fechaInicio">
+    <div class="filtro-item">
+      <label for="fechaInicio">Desde</label>
+      <input type="date" id="fechaInicio">
+    </div>
 
-    <label for="fechaFin">Hasta:</label>
-    <input type="date" id="fechaFin">
+    <div class="filtro-item">
+      <label for="fechaFin">Hasta</label>
+      <input type="date" id="fechaFin">
+    </div>
+
+    <div class="filtro-item">
+      <label for="groupBy">Agrupar por</label>
+      <select id="groupBy">
+        <option value="day" selected>Día</option>
+        <option value="week">Semana</option>
+      </select>
+    </div>
+
+    <div class="filtro-item filtro-conj">
+      <span>Connotación</span>
+      <label><input type="checkbox" id="chkPos" checked> Positiva</label>
+      <label><input type="checkbox" id="chkNeu" checked> Neutral</label>
+      <label><input type="checkbox" id="chkNeg" checked> Negativa</label>
+    </div>
   </section>
 
   <section id="graficos">
@@ -41,7 +64,7 @@
       <canvas id="graficoTemporal"></canvas>
     </div>
     <div class="grafico-container">
-      <h2>Polaridad promedio por fecha</h2>
+      <h2>Polaridad promedio por fecha (−1 a 1)</h2>
       <canvas id="graficoPolaridadProm"></canvas>
     </div>
   </section>
