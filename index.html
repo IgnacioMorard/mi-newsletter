@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard de Noticias</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -9,6 +10,7 @@
 <body>
   <header>
     <h1>📊 Dashboard de Noticias</h1>
+    <p>Explorá, filtrá y analizá tu set de noticias procesadas</p>
   </header>
 
   <section id="filtros">
@@ -35,8 +37,12 @@
       <canvas id="graficoConnotacion"></canvas>
     </div>
     <div class="grafico-container">
-      <h2>Tendencia temporal</h2>
+      <h2>Tendencia temporal (conteo)</h2>
       <canvas id="graficoTemporal"></canvas>
+    </div>
+    <div class="grafico-container">
+      <h2>Polaridad promedio por fecha</h2>
+      <canvas id="graficoPolaridadProm"></canvas>
     </div>
   </section>
 
