@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Newsletter de Noticias</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>📰 Newsletter de Noticias</h1>
+    <p>Explorá las noticias procesadas con filtros y gráficos</p>
+  </header>
+
+  <section id="filtros">
+    <label for="filtroFuente">Fuente:</label>
+    <select id="filtroFuente">
+      <option value="">Todas</option>
+    </select>
+
+    <label for="filtroTema">Tema:</label>
+    <select id="filtroTema">
+      <option value="">Todos</option>
+    </select>
+  </section>
+
+  <section id="graficos">
+    <h2>Distribución por Relevancia</h2>
+    <canvas id="graficoRelevancia"></canvas>
+  </section>
+
+  <section id="noticias">
+    <!-- Noticias se cargarán aquí -->
+  </section>
+
+  <footer>
+    <p>Generado automáticamente con datos en JSON 📊</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
