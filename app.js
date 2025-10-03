@@ -7,11 +7,6 @@ async function cargarNoticias() {
   return await resp.json();
 }
 
-// Registrar plugin de datalabels si está disponible
-if (window.ChartDataLabels) {
-  Chart.register(window.ChartDataLabels);
-}
-
 function signLabel(p, thr){
   if (p > thr) return 'positiva';
   if (p < -thr) return 'negativa';
@@ -135,45 +130,12 @@ function dimColor(hex, alpha){
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-function pieDatalabelsOptions(data){
-  const total = data.reduce((a,b)=>a+b,0) || 1;
-  return {
-    color: '#111',
-    textStrokeColor: '#fff',
-    textStrokeWidth: 2,
-    font: { weight: '600', size: 11 },
-    formatter: (value) => {
-      const pct = (value/total*100).toFixed(1);
-      return `${value} (${pct}%)`;
-    },
-    clamp: true,
-    clip: true,
-    padding: 4
-  };
-}
-
-function topNCounts(arr, key, n=5){
-  const map = new Map();
-  arr.forEach(o => {
-    const k = (o[key] ?? '').toString().trim();
-    if (!k) return;
-    map.set(k, (map.get(k) || 0) + 1);
-  });
-  const pairs = Array.from(map.entries()).sort((a,b)=>b[1]-a[1]).slice(0,n);
-  const total = arr.length || 1;
-  return {
-    labels: pairs.map(p=>p[0]),
-    counts: pairs.map(p=>p[1]),
-    percents: pairs.map(p=>+(p[1]/total*100).toFixed(1))
-  };
-}
-
 function graficar(noticias) {
   destruirGraficos();
 
   const groupBy = document.getElementById('groupBy').value;
 
-  // === Relevancia (pie con cross-filter + sombreado + % y conteo) ===
+  // === Relevancia (pie; % solo en tooltip) ===
   const conteoRel = { alta: 0, media: 0, baja: 0 };
   const coloresRel = { alta: "#e74c3c", media: "#f1c40f", baja: "#2ecc71" };
   noticias.forEach(n => {
@@ -192,14 +154,13 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
         tooltip: { callbacks: { label: (ctx) => {
           const total = relData.reduce((a,b)=>a+b,0) || 1;
           const val = ctx.parsed;
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
-        datalabels: pieDatalabelsOptions(relData)
       },
       layout: { padding: {top:0, right:0, bottom:0, left:0} },
       onClick: (evt, elems) => {
@@ -212,7 +173,7 @@ function graficar(noticias) {
     }
   });
 
-  // === Connotación (pie por signo con cross-filter + sombreado + % y conteo) ===
+  // === Connotación (pie; % solo en tooltip) ===
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
   const coloresCon = { positiva:"#2ecc71", negativa:"#e74c3c", neutral:"#95a5a6" };
   noticias.forEach(n => { conteoCon[n._signo]++; });
@@ -228,14 +189,13 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
         tooltip: { callbacks: { label: (ctx) => {
           const total = conData.reduce((a,b)=>a+b,0) || 1;
           const val = ctx.parsed;
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
-        datalabels: pieDatalabelsOptions(conData)
       },
       layout: { padding: {top:0, right:0, bottom:0, left:0} },
       onClick: (evt, elems) => {
@@ -248,41 +208,33 @@ function graficar(noticias) {
     }
   });
 
-  // === Top 5 Fuentes (horizontal) ===
+  // === Top 5 Fuentes (horizontal; % solo en tooltip) ===
   {
-    const topF = topNCounts(noticias, 'Fuente', 5);
+    const map = new Map();
+    noticias.forEach(o => { const k=(o.Fuente??'').toString().trim(); if(k) map.set(k,(map.get(k)||0)+1); });
+    const pairs = Array.from(map.entries()).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const labels = pairs.map(p=>p[0]);
+    const counts = pairs.map(p=>p[1]);
+    const total = noticias.length || 1;
+    const percents = counts.map(c => +(c/total*100).toFixed(1));
+
     charts.topFuentes = new Chart(document.getElementById('graficoTopFuentes'), {
       type: 'bar',
-      data: {
-        labels: topF.labels,
-        datasets: [{
-          label: 'Noticias',
-          data: topF.counts,
-          backgroundColor: "#3498db"
-        }]
-      },
+      data: { labels, datasets: [{ label: 'Noticias', data: counts, backgroundColor: "#3498db" }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         indexAxis: 'y',
         plugins: {
           legend: { display: false },
           tooltip: { callbacks: { label: (ctx) => {
-            const i = ctx.dataIndex;
-            return `${ctx.formattedValue} (${topF.percents[i]}%)`;
-          } } },
-          datalabels: {
-            anchor: 'end', align: 'right',
-            formatter: (v, ctx) => `${v} (${topF.percents[ctx.dataIndex]}%)`,
-            color: '#111', font: { weight:'600', size: 11 }, clamp:true, clip:true
-          }
+            const i = ctx.dataIndex; return `${ctx.formattedValue} (${percents[i]}%)`;
+          } } }
         },
-        scales: {
-          x: { beginAtZero: true, ticks: { precision:0 } }
-        },
+        scales: { x: { beginAtZero: true, ticks: { precision:0 } } },
         onClick: (evt, elements) => {
           if (!elements.length) return;
           const idx = elements[0].index;
-          const val = topF.labels[idx];
+          const val = labels[idx];
           const sel = document.getElementById('filtroFuente');
           sel.value = sel.value === val ? '' : val;
           actualizarDashboard();
@@ -291,41 +243,33 @@ function graficar(noticias) {
     });
   }
 
-  // === Top 5 Temas (horizontal) ===
+  // === Top 5 Temas (horizontal; % solo en tooltip) ===
   {
-    const topT = topNCounts(noticias, 'Tema', 5);
+    const map = new Map();
+    noticias.forEach(o => { const k=(o.Tema??'').toString().trim(); if(k) map.set(k,(map.get(k)||0)+1); });
+    const pairs = Array.from(map.entries()).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const labels = pairs.map(p=>p[0]);
+    const counts = pairs.map(p=>p[1]);
+    const total = noticias.length || 1;
+    const percents = counts.map(c => +(c/total*100).toFixed(1));
+
     charts.topTemas = new Chart(document.getElementById('graficoTopTemas'), {
       type: 'bar',
-      data: {
-        labels: topT.labels,
-        datasets: [{
-          label: 'Noticias',
-          data: topT.counts,
-          backgroundColor: "#9b59b6"
-        }]
-      },
+      data: { labels, datasets: [{ label: 'Noticias', data: counts, backgroundColor: "#9b59b6" }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         indexAxis: 'y',
         plugins: {
           legend: { display: false },
           tooltip: { callbacks: { label: (ctx) => {
-            const i = ctx.dataIndex;
-            return `${ctx.formattedValue} (${topT.percents[i]}%)`;
-          } } },
-          datalabels: {
-            anchor: 'end', align: 'right',
-            formatter: (v, ctx) => `${v} (${topT.percents[ctx.dataIndex]}%)`,
-            color: '#111', font: { weight:'600', size: 11 }, clamp:true, clip:true
-          }
+            const i = ctx.dataIndex; return `${ctx.formattedValue} (${percents[i]}%)`;
+          } } }
         },
-        scales: {
-          x: { beginAtZero: true, ticks: { precision:0 } }
-        },
+        scales: { x: { beginAtZero: true, ticks: { precision:0 } } },
         onClick: (evt, elements) => {
           if (!elements.length) return;
           const idx = elements[0].index;
-          const val = topT.labels[idx];
+          const val = labels[idx];
           const sel = document.getElementById('filtroTema');
           sel.value = sel.value === val ? '' : val;
           actualizarDashboard();
@@ -367,7 +311,7 @@ function graficar(noticias) {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
         tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%` } },
-        legend: { display: true, labels: { font: { size: 11 } } }
+        legend: { display: true, labels: { font: { size: 11 }, padding: 10 } }
       },
       layout: { padding: 0 },
       scales: {
@@ -436,7 +380,7 @@ function graficar(noticias) {
         },
         y: { suggestedMin: -1, suggestedMax: 1 }
       },
-      plugins: { legend: { labels: { font: { size: 11 } } } },
+      plugins: { legend: { labels: { font: { size: 11 }, padding: 10 } } },
       layout: { padding: 0 }
     }
   });
