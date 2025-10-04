@@ -2,6 +2,26 @@ let noticiasGlobal = [];
 let charts = {};
 const cross = { connotacion: null, relevancia: null, dateKey: null };
 
+// === THEME toggle (dark default) ===
+function initTheme(){
+  try{
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    const btn = document.getElementById('themeToggle');
+    if (btn){
+      btn.textContent = saved === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+      btn.onclick = () => {
+        const curr = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = (curr === 'dark') ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        btn.textContent = next === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+        actualizarDashboard(); // re-render for axis/legend contrast
+      };
+    }
+  }catch(e){ console.warn('Theme init error', e); }
+}
+
 async function cargarNoticias() {
   const resp = await fetch("noticias_enriquecidas.json");
   return await resp.json();
@@ -365,7 +385,7 @@ function graficar(noticias) {
     plugins: [htmlLegendPlugin('legendTemporal', true)]
   });
 
-  // Polaridad promedio por fecha (línea −1..1) + legend visible
+  // Polaridad promedio por fecha (línea −1..1)
   const polPorFecha = {};
   noticias.forEach(n => {
     const key = keyForGroup(n.Fecha, groupBy);
@@ -451,6 +471,7 @@ function actualizarDashboard() {
 }
 
 window.onload = async () => {
+  initTheme();
   try {
     noticiasGlobal = await cargarNoticias();
     cargarFiltros(noticiasGlobal);

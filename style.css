@@ -1,4 +1,4 @@
-/* === Dark theme enforced by default === */
+/* === Theme variables (dark default) === */
 :root{
   --bg:#0b1220;
   --panel:#0f172a;
@@ -9,6 +9,18 @@
   --shadow:0 8px 24px rgba(0,0,0,.35);
   --grid:#1f2937;
   --cardH: clamp(340px, 42vh, 560px);
+  --chartH: clamp(260px, 38vh, 420px);
+}
+
+:root[data-theme="light"]{
+  --bg:#f6f7fb;
+  --panel:#ffffff;
+  --ink:#1f2937;
+  --ink-soft:#475569;
+  --brand:#0f172a;
+  --accent:#2563eb;
+  --shadow:0 4px 16px rgba(0,0,0,.08);
+  --grid:#e5e7eb;
 }
 
 /* Base */
@@ -26,6 +38,8 @@ header { background: var(--brand); color: #fff; padding: 1rem; }
 .header-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
 header h1{margin:.2rem 0 0}
 header p{margin:.2rem 0 0; color:#9fb3d1}
+#themeToggle{ background:transparent; color:#e2e8f0; border:1px solid #64748b; border-radius:10px; padding:.5rem .8rem; cursor:pointer; }
+#themeToggle:hover{ filter:brightness(1.15); }
 
 /* Filtros */
 #filtros {
@@ -35,8 +49,8 @@ header p{margin:.2rem 0 0; color:#9fb3d1}
   padding: 1rem;
   background: color-mix(in oklab, var(--panel) 85%, transparent);
   align-items:end;
-  border-top:1px solid #33415566;
-  border-bottom:1px solid #33415566;
+  border-top:1px solid #33415522;
+  border-bottom:1px solid #33415522;
 }
 .filtro-item{
   display:flex;
@@ -51,12 +65,12 @@ header p{margin:.2rem 0 0; color:#9fb3d1}
   width:100%;
   padding:.55rem .6rem;
   border-radius:10px;
-  border:1px solid #33415566;
+  border:1px solid #33415522;
   background:var(--panel);
   color: var(--ink);
 }
 #btnLimpiar{
-  padding:.6rem .8rem; border-radius:10px; border:1px solid #33415566; background:var(--panel); color:var(--ink); cursor:pointer;
+  padding:.6rem .8rem; border-radius:10px; border:1px solid #33415522; background:var(--panel); color:var(--ink); cursor:pointer;
 }
 #btnLimpiar:hover{ filter:brightness(1.05); }
 
@@ -71,7 +85,7 @@ header p{margin:.2rem 0 0; color:#9fb3d1}
   background: var(--panel);
   border-radius: 12px;
   box-shadow: var(--shadow);
-  border:1px solid #33415566;
+  border:1px solid #33415522;
   padding: .9rem;
 }
 .kpi-title{ font-size:.85rem; color: var(--ink-soft); }
@@ -89,11 +103,11 @@ header p{margin:.2rem 0 0; color:#9fb3d1}
   padding: 1rem;
   border-radius: 12px;
   box-shadow: var(--shadow);
-  border:1px solid #33415566;
+  border:1px solid #33415522;
   display:grid;
-  grid-template-rows: auto 1fr auto; /* título, canvas, legend */
+  grid-template-rows: auto auto auto; /* título, chart-area, legend */
   overflow:visible;
-  min-height: var(--cardH); /* tamaño base uniforme; puede crecer */
+  min-height: var(--cardH); /* base uniforme; puede crecer por leyendas */
   height:auto;
 }
 .grafico-container h2{
@@ -102,16 +116,24 @@ header p{margin:.2rem 0 0; color:#9fb3d1}
   font-weight:600;
   color: var(--ink);
 }
-.grafico-container canvas{
+
+/* Chart area => altura controlada para evitar scroll infinito */
+.chart-area{
+  position:relative;
+  width:100%;
+  height: var(--chartH);
+  contain: content;
+}
+.chart-area canvas{
   width: 100% !important;
   height: 100% !important;
   display:block;
-  contain: content;
 }
 
 /* HTML Legend */
 .legend{ display:flex; flex-wrap:wrap; gap:.6rem .8rem; margin-top:.6rem; }
-.legend .item{ display:inline-flex; align-items:center; gap:.55rem; font-size:.95rem; color:var(--ink); background:#132033; border:1px solid #2a3b57; border-radius:999px; padding:.28rem .7rem; cursor:pointer; }
+.legend .item{ display:inline-flex; align-items:center; gap:.55rem; font-size:.95rem; color:var(--ink); background:color-mix(in oklab, var(--panel) 90%, transparent); border:1px solid #2a3b57; border-radius:999px; padding:.28rem .7rem; cursor:pointer; }
+:root[data-theme="light"] .legend .item{ border-color:#cbd5e1; }
 .legend .item:hover{ filter:brightness(1.05) }
 .legend .swatch{ width:13px; height:13px; border-radius:3px; display:inline-block; }
 
@@ -128,7 +150,7 @@ header p{margin:.2rem 0 0; color:#9fb3d1}
   border-radius: 12px;
   padding: 1rem;
   box-shadow: var(--shadow);
-  border:1px solid #33415566;
+  border:1px solid #33415522;
 }
 .noticia h2 { margin: 0 0 .5rem 0; font-size: 1.05rem; line-height:1.4; }
 .noticia h2 a { color: var(--accent); text-decoration: none; }
@@ -147,5 +169,5 @@ footer {
 /* Mobile tweaks */
 @media (max-width: 520px){
   header h1{font-size:1.25rem}
-  :root{ --cardH: clamp(320px, 50vh, 560px); }
+  :root{ --cardH: clamp(320px, 50vh, 560px); --chartH: clamp(220px, 44vh, 420px); }
 }

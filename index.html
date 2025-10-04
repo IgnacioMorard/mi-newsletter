@@ -12,8 +12,9 @@
     <div class="header-row">
       <div>
         <h1>📊 Dashboard de Noticias</h1>
-        <p>Modo oscuro por defecto • Leyendas legibles • Agrupar por día/semana/mes</p>
+        <p>Dark por defecto • Leyendas claras • Agrupar por día/semana/mes</p>
       </div>
+      <button id="themeToggle" type="button" aria-label="Cambiar tema">☀️ Claro</button>
     </div>
   </header>
 
@@ -78,30 +79,30 @@
   <section id="graficos">
     <div class="grafico-container">
       <h2>Relevancia</h2>
-      <canvas id="graficoRelevancia"></canvas>
+      <div class="chart-area"><canvas id="graficoRelevancia"></canvas></div>
       <div id="legendRelevancia" class="legend"></div>
     </div>
     <div class="grafico-container">
       <h2>Connotación (según polaridad y umbral)</h2>
-      <canvas id="graficoConnotacion"></canvas>
+      <div class="chart-area"><canvas id="graficoConnotacion"></canvas></div>
       <div id="legendConnotacion" class="legend"></div>
     </div>
     <div class="grafico-container">
       <h2>Top 5 Fuentes</h2>
-      <canvas id="graficoTopFuentes"></canvas>
+      <div class="chart-area"><canvas id="graficoTopFuentes"></canvas></div>
     </div>
     <div class="grafico-container">
       <h2>Top 5 Temas</h2>
-      <canvas id="graficoTopTemas"></canvas>
+      <div class="chart-area"><canvas id="graficoTopTemas"></canvas></div>
     </div>
     <div class="grafico-container">
       <h2>Tendencia por polaridad (% por fecha)</h2>
-      <canvas id="graficoTemporal"></canvas>
+      <div class="chart-area"><canvas id="graficoTemporal"></canvas></div>
       <div id="legendTemporal" class="legend"></div>
     </div>
     <div class="grafico-container">
       <h2>Polaridad promedio por fecha (−1 a 1)</h2>
-      <canvas id="graficoPolaridadProm"></canvas>
+      <div class="chart-area"><canvas id="graficoPolaridadProm"></canvas></div>
       <div id="legendPolaridad" class="legend"></div>
     </div>
   </section>
