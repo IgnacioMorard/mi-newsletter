@@ -2,27 +2,6 @@ let noticiasGlobal = [];
 let charts = {};
 const cross = { connotacion: null, relevancia: null, dateKey: null };
 
-// === THEME (dark default) ===
-(function initTheme(){
-  try{
-    const saved = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', saved);
-    const btn = document.getElementById('themeToggle');
-    if (btn){
-      btn.textContent = saved === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
-      btn.onclick = () => {
-        const curr = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = (curr === 'dark') ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-        btn.textContent = next === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
-        // Re-render legends to ensure good contrast (Chart.js tooltips adapt automatically)
-        actualizarDashboard();
-      };
-    }
-  }catch(e){ console.warn('Theme init error', e); }
-})();
-
 async function cargarNoticias() {
   const resp = await fetch("noticias_enriquecidas.json");
   return await resp.json();
@@ -37,6 +16,11 @@ function normRelevancia(v){
   const s = (v ?? '').toString().trim().toLowerCase();
   if (s === 'alta' || s === 'media' || s === 'baja') return s;
   return 'baja';
+}
+
+// Read CSS variables to style axes in charts
+function cssVar(name){
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
 // Agrupación por día, semana, mes
@@ -159,7 +143,7 @@ function dimColor(hex, alpha){
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-// === HTML legend plugin (always visible legends outside canvas) ===
+// HTML legend plugin (outside)
 function htmlLegendPlugin(containerId, byDataset=false){
   return {
     id: `htmlLegend_${containerId}`,
@@ -167,7 +151,6 @@ function htmlLegendPlugin(containerId, byDataset=false){
       const container = document.getElementById(containerId);
       if (!container) return;
       container.innerHTML = '';
-      // Use built-in generator to get consistent labels/colors
       const items = byDataset
         ? chart.legend?.legendItems
         : chart.options.plugins.legend.labels.generateLabels(chart);
@@ -200,8 +183,10 @@ function graficar(noticias) {
   destruirGraficos();
 
   const groupBy = document.getElementById('groupBy').value;
+  const tickColor = cssVar('--ink-soft') || '#cbd5e1';
+  const gridColor = cssVar('--grid') || '#1f2937';
 
-  // === Relevancia (pie; % solo en tooltip) ===
+  // Relevancia (pie)
   const conteoRel = { alta: 0, media: 0, baja: 0 };
   const coloresRel = { alta: "#ef4444", media: "#f59e0b", baja: "#10b981" };
   noticias.forEach(n => {
@@ -220,27 +205,19 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
-        legend: { display:false, position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
+        legend: { display:false },
         tooltip: { callbacks: { label: (ctx) => {
           const total = relData.reduce((a,b)=>a+b,0) || 1;
           const val = ctx.parsed;
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
-      },
-      layout: { padding: {top:0, right:0, bottom:0, left:0} },
-      onClick: (evt, elems) => {
-        if (!elems.length) { cross.relevancia = null; actualizarDashboard(); return; }
-        const idx = elems[0].index;
-        const val = relLabels[idx];
-        cross.relevancia = (cross.relevancia === val) ? null : val;
-        actualizarDashboard();
       }
     },
     plugins: [htmlLegendPlugin('legendRelevancia')]
   });
 
-  // === Connotación (pie; % solo en tooltip) ===
+  // Connotación (pie)
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
   const coloresCon = { positiva:"#10b981", negativa:"#ef4444", neutral:"#94a3b8" };
   noticias.forEach(n => { conteoCon[n._signo]++; });
@@ -256,27 +233,19 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
-        legend: { display:false, position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
+        legend: { display:false },
         tooltip: { callbacks: { label: (ctx) => {
           const total = conData.reduce((a,b)=>a+b,0) || 1;
           const val = ctx.parsed;
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
-      },
-      layout: { padding: {top:0, right:0, bottom:0, left:0} },
-      onClick: (evt, elems) => {
-        if (!elems.length) { cross.connotacion = null; actualizarDashboard(); return; }
-        const idx = elems[0].index;
-        const val = conLabels[idx];
-        cross.connotacion = (cross.connotacion === val) ? null : val;
-        actualizarDashboard();
       }
     },
     plugins: [htmlLegendPlugin('legendConnotacion')]
   });
 
-  // === Top 5 Fuentes (horizontal; % solo en tooltip) ===
+  // Top 5 Fuentes
   {
     const map = new Map();
     noticias.forEach(o => { const k=(o.Fuente??'').toString().trim(); if(k) map.set(k,(map.get(k)||0)+1); });
@@ -298,7 +267,8 @@ function graficar(noticias) {
             const i = ctx.dataIndex; return `${ctx.formattedValue} (${percents[i]}%)`;
           } } }
         },
-        scales: { x: { beginAtZero: true, ticks: { precision:0 } } },
+        scales: { x: { beginAtZero: true, ticks: { precision:0, color: tickColor }, grid:{ color: gridColor } },
+                  y: { ticks:{ color: tickColor }, grid:{ color: gridColor } } },
         onClick: (evt, elements) => {
           if (!elements.length) return;
           const idx = elements[0].index;
@@ -311,7 +281,7 @@ function graficar(noticias) {
     });
   }
 
-  // === Top 5 Temas (horizontal; % solo en tooltip) ===
+  // Top 5 Temas
   {
     const map = new Map();
     noticias.forEach(o => { const k=(o.Tema??'').toString().trim(); if(k) map.set(k,(map.get(k)||0)+1); });
@@ -333,7 +303,8 @@ function graficar(noticias) {
             const i = ctx.dataIndex; return `${ctx.formattedValue} (${percents[i]}%)`;
           } } }
         },
-        scales: { x: { beginAtZero: true, ticks: { precision:0 } } },
+        scales: { x: { beginAtZero: true, ticks: { precision:0, color: tickColor }, grid:{ color: gridColor } },
+                  y: { ticks:{ color: tickColor }, grid:{ color: gridColor } } },
         onClick: (evt, elements) => {
           if (!elements.length) return;
           const idx = elements[0].index;
@@ -346,7 +317,7 @@ function graficar(noticias) {
     });
   }
 
-  // === Temporal (100% apiladas por signo) con click por fecha ===
+  // Temporal apilado 100%
   const porFecha = {};
   noticias.forEach(n => {
     const key = keyForGroup(n.Fecha, groupBy);
@@ -361,18 +332,14 @@ function graficar(noticias) {
   const pctNeg = fechas.map(f => porFecha[f].total ? +(porFecha[f].neg/porFecha[f].total*100).toFixed(2) : 0);
   const pctNeu = fechas.map(f => porFecha[f].total ? +(porFecha[f].neu/porFecha[f].total*100).toFixed(2) : 0);
 
-  const colorPos = cross.dateKey ? dimColor("#10b981", 0.6) : "#10b981";
-  const colorNeu = cross.dateKey ? dimColor("#94a3b8", 0.6) : "#94a3b8";
-  const colorNeg = cross.dateKey ? dimColor("#ef4444", 0.6) : "#ef4444";
-
   charts.temporal = new Chart(document.getElementById("graficoTemporal"), {
     type: 'bar',
     data: {
       labels: fechas,
       datasets: [
-        { label: "Positiva", data: pctPos, backgroundColor: colorPos, stack: "polaridad" },
-        { label: "Neutral",  data: pctNeu, backgroundColor: colorNeu, stack: "polaridad" },
-        { label: "Negativa", data: pctNeg, backgroundColor: colorNeg, stack: "polaridad" }
+        { label: "Positiva", data: pctPos, backgroundColor: "#10b981", stack: "polaridad" },
+        { label: "Neutral",  data: pctNeu, backgroundColor: "#94a3b8", stack: "polaridad" },
+        { label: "Negativa", data: pctNeg, backgroundColor: "#ef4444", stack: "polaridad" }
       ]
     },
     options: {
@@ -383,9 +350,9 @@ function graficar(noticias) {
       },
       layout: { padding: 0 },
       scales: {
-        x: { stacked: true, ticks: { autoSkip: true, maxTicksLimit: 8 } },
+        x: { stacked: true, ticks: { autoSkip: true, maxTicksLimit: 8, color: tickColor }, grid:{ color: gridColor } },
         y: { stacked: true, beginAtZero: true, max: 100,
-             ticks: { callback: (v) => v + "%" } }
+             ticks: { callback: (v) => v + "%", color: tickColor }, grid:{ color: gridColor } }
       },
       onClick: (evt, elements) => {
         if (!elements.length) { cross.dateKey = null; actualizarDashboard(); return; }
@@ -398,7 +365,7 @@ function graficar(noticias) {
     plugins: [htmlLegendPlugin('legendTemporal', true)]
   });
 
-  // === Polaridad promedio por fecha (línea −1..1) ===
+  // Polaridad promedio por fecha (línea −1..1) + legend visible
   const polPorFecha = {};
   noticias.forEach(n => {
     const key = keyForGroup(n.Fecha, groupBy);
@@ -415,16 +382,14 @@ function graficar(noticias) {
   const minX = -0.5;
   const maxX = (npts === 1) ? 0.5 : (npts - 0.5);
 
-  const lineColor = cross.dateKey ? dimColor("#8b5cf6", 0.6) : "#8b5cf6";
-
   charts.polaridadProm = new Chart(document.getElementById("graficoPolaridadProm"), {
     type: 'line',
     data: {
       datasets: [{
         label: "Polaridad promedio (−1 a 1)",
         data: dataPoints,
-        borderColor: lineColor,
-        pointBackgroundColor: lineColor,
+        borderColor: "#8b5cf6",
+        pointBackgroundColor: "#8b5cf6",
         pointRadius: 3,
         fill: false,
         tension: .2
@@ -438,6 +403,7 @@ function graficar(noticias) {
           min: minX,
           max: maxX,
           ticks: {
+            color: tickColor,
             callback: (value) => {
               const i = Math.round(value);
               return (i >= 0 && i < labelsPol.length) ? labelsPol[i] : '';
@@ -447,11 +413,12 @@ function graficar(noticias) {
           },
           grid: { display: false }
         },
-        y: { suggestedMin: -1, suggestedMax: 1 }
+        y: { suggestedMin: -1, suggestedMax: 1, ticks:{ color: tickColor }, grid:{ color: gridColor } }
       },
       plugins: { legend: { display:false } },
       layout: { padding: 0 }
-    }
+    },
+    plugins: [htmlLegendPlugin('legendPolaridad', true)]
   });
 }
 
