@@ -1,5 +1,17 @@
-/* Base */
+/* === Theme variables (dark by default) === */
 :root{
+  --bg:#0b1220;
+  --panel:#0f172a;
+  --ink:#e5e7eb;
+  --ink-soft:#94a3b8;
+  --brand:#0b1220;
+  --accent:#60a5fa;
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+  --grid:#1f2937;
+  --cardH: clamp(340px, 42vh, 560px);
+}
+
+:root[data-theme="light"]{
   --bg:#f7f7f9;
   --panel:#ffffff;
   --ink:#2b2b2b;
@@ -7,9 +19,10 @@
   --brand:#2c3e50;
   --accent:#2980b9;
   --shadow:0 2px 6px rgba(0,0,0,.08);
-  --cardH: clamp(340px, 42vh, 560px);
+  --grid:#e5e7eb;
 }
 
+/* Base */
 *{box-sizing:border-box}
 html,body{height:100%}
 body {
@@ -20,14 +33,12 @@ body {
 }
 
 /* Header */
-header {
-  background: var(--brand);
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
+header { background: var(--brand); color: #fff; padding: 1rem; }
+.header-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
 header h1{margin:.2rem 0 0}
-header p{margin:.2rem 0 0; color:#e9eef3}
+header p{margin:.2rem 0 0; color:#cbd5e1}
+#themeToggle{ background:transparent; color:#e2e8f0; border:1px solid #64748b; border-radius:10px; padding:.5rem .8rem; cursor:pointer; }
+#themeToggle:hover{ filter:brightness(1.15); }
 
 /* Filtros */
 #filtros {
@@ -35,8 +46,10 @@ header p{margin:.2rem 0 0; color:#e9eef3}
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: .75rem;
   padding: 1rem;
-  background: #ecf0f1;
+  background: color-mix(in oklab, var(--panel) 85%, transparent);
   align-items:end;
+  border-top:1px solid #33415522;
+  border-bottom:1px solid #33415522;
 }
 .filtro-item{
   display:flex;
@@ -50,14 +63,15 @@ header p{margin:.2rem 0 0; color:#e9eef3}
 #filtros select,#filtros input[type="date"], #filtros input[type="number"]{
   width:100%;
   padding:.55rem .6rem;
-  border-radius:8px;
-  border:1px solid #d0d7de;
-  background:#fff;
+  border-radius:10px;
+  border:1px solid #33415522;
+  background:var(--panel);
+  color: var(--ink);
 }
 #btnLimpiar{
-  padding:.6rem .8rem; border-radius:8px; border:1px solid #cfd8e3; background:#fff; cursor:pointer;
+  padding:.6rem .8rem; border-radius:10px; border:1px solid #33415522; background:var(--panel); color:var(--ink); cursor:pointer;
 }
-#btnLimpiar:hover{ background:#f1f5f9; }
+#btnLimpiar:hover{ filter:brightness(1.05); }
 
 /* KPIs */
 #kpis{
@@ -70,6 +84,7 @@ header p{margin:.2rem 0 0; color:#e9eef3}
   background: var(--panel);
   border-radius: 12px;
   box-shadow: var(--shadow);
+  border:1px solid #33415522;
   padding: .9rem;
 }
 .kpi-title{ font-size:.85rem; color: var(--ink-soft); }
@@ -87,16 +102,18 @@ header p{margin:.2rem 0 0; color:#e9eef3}
   padding: 1rem;
   border-radius: 12px;
   box-shadow: var(--shadow);
+  border:1px solid #33415522;
   display:grid;
-  grid-template-rows: auto 1fr; /* título arriba, canvas ocupa el resto */
-  overflow:hidden;
-  height: var(--cardH); /* tamaño uniforme */
+  grid-template-rows: auto 1fr auto; /* título, canvas, legend */
+  overflow:visible;
+  min-height: var(--cardH); /* tamaño base uniforme; puede crecer */
+  height:auto;
 }
 .grafico-container h2{
   margin:.2rem 0 .6rem;
   font-size:1.02rem;
   font-weight:600;
-  color: var(--brand);
+  color: var(--ink);
 }
 .grafico-container canvas{
   width: 100% !important;
@@ -104,6 +121,11 @@ header p{margin:.2rem 0 0; color:#e9eef3}
   display:block;
   contain: content;
 }
+
+/* HTML Legend */
+.legend{ display:flex; flex-wrap:wrap; gap:.5rem .7rem; margin-top:.5rem; }
+.legend .item{ display:inline-flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--ink); background:color-mix(in oklab, var(--panel) 90%, transparent); border:1px solid #33415522; border-radius:999px; padding:.25rem .6rem; cursor:pointer; }
+.legend .swatch{ width:12px; height:12px; border-radius:3px; display:inline-block; }
 
 /* Noticias grid */
 #noticias {
@@ -118,6 +140,7 @@ header p{margin:.2rem 0 0; color:#e9eef3}
   border-radius: 12px;
   padding: 1rem;
   box-shadow: var(--shadow);
+  border:1px solid #33415522;
 }
 .noticia h2 { margin: 0 0 .5rem 0; font-size: 1.05rem; line-height:1.4; }
 .noticia h2 a { color: var(--accent); text-decoration: none; }

@@ -2,6 +2,27 @@ let noticiasGlobal = [];
 let charts = {};
 const cross = { connotacion: null, relevancia: null, dateKey: null };
 
+// === THEME (dark default) ===
+(function initTheme(){
+  try{
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    const btn = document.getElementById('themeToggle');
+    if (btn){
+      btn.textContent = saved === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+      btn.onclick = () => {
+        const curr = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = (curr === 'dark') ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        btn.textContent = next === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+        // Re-render legends to ensure good contrast (Chart.js tooltips adapt automatically)
+        actualizarDashboard();
+      };
+    }
+  }catch(e){ console.warn('Theme init error', e); }
+})();
+
 async function cargarNoticias() {
   const resp = await fetch("noticias_enriquecidas.json");
   return await resp.json();
@@ -18,10 +39,17 @@ function normRelevancia(v){
   return 'baja';
 }
 
+// Agrupación por día, semana, mes
 function keyForGroup(dateStr, groupBy){
   if (!dateStr) return '';
   if (groupBy === 'day') return dateStr;
   const d = new Date(dateStr + 'T00:00:00');
+  if (groupBy === 'month'){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    return `${y}-${m}`;
+  }
+  // week (ISO-like)
   const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
   const dayNum = tmp.getUTCDay() || 7;
   tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
@@ -123,11 +151,49 @@ function calcKPIs(noticias){
   document.getElementById('kpiPolMed').textContent = med.toFixed(3);
 }
 
+// helper to fade colors
 function dimColor(hex, alpha){
   const r = parseInt(hex.substr(1,2),16);
   const g = parseInt(hex.substr(3,2),16);
   const b = parseInt(hex.substr(5,2),16);
   return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// === HTML legend plugin (always visible legends outside canvas) ===
+function htmlLegendPlugin(containerId, byDataset=false){
+  return {
+    id: `htmlLegend_${containerId}`,
+    afterUpdate(chart){
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      // Use built-in generator to get consistent labels/colors
+      const items = byDataset
+        ? chart.legend?.legendItems
+        : chart.options.plugins.legend.labels.generateLabels(chart);
+      (items || []).forEach((item) => {
+        const btn = document.createElement('button');
+        btn.className = 'item';
+        const sw = document.createElement('span');
+        sw.className = 'swatch';
+        sw.style.background = item.fillStyle || item.strokeStyle;
+        btn.appendChild(sw);
+        const tx = document.createElement('span');
+        tx.textContent = item.text;
+        btn.appendChild(tx);
+        btn.onclick = () => {
+          if (byDataset){
+            const vis = chart.isDatasetVisible(item.datasetIndex);
+            chart.setDatasetVisibility(item.datasetIndex, !vis);
+          } else {
+            chart.toggleDataVisibility(item.index);
+          }
+          chart.update();
+        };
+        container.appendChild(btn);
+      });
+    }
+  };
 }
 
 function graficar(noticias) {
@@ -137,7 +203,7 @@ function graficar(noticias) {
 
   // === Relevancia (pie; % solo en tooltip) ===
   const conteoRel = { alta: 0, media: 0, baja: 0 };
-  const coloresRel = { alta: "#e74c3c", media: "#f1c40f", baja: "#2ecc71" };
+  const coloresRel = { alta: "#ef4444", media: "#f59e0b", baja: "#10b981" };
   noticias.forEach(n => {
     const k = normRelevancia(n.Relevancia);
     if (k in conteoRel) conteoRel[k]++;
@@ -154,7 +220,7 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
+        legend: { display:false, position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
         tooltip: { callbacks: { label: (ctx) => {
           const total = relData.reduce((a,b)=>a+b,0) || 1;
           const val = ctx.parsed;
@@ -170,12 +236,13 @@ function graficar(noticias) {
         cross.relevancia = (cross.relevancia === val) ? null : val;
         actualizarDashboard();
       }
-    }
+    },
+    plugins: [htmlLegendPlugin('legendRelevancia')]
   });
 
   // === Connotación (pie; % solo en tooltip) ===
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
-  const coloresCon = { positiva:"#2ecc71", negativa:"#e74c3c", neutral:"#95a5a6" };
+  const coloresCon = { positiva:"#10b981", negativa:"#ef4444", neutral:"#94a3b8" };
   noticias.forEach(n => { conteoCon[n._signo]++; });
   const conLabels = ["positiva","negativa","neutral"];
   const conData = [conteoCon.positiva, conteoCon.negativa, conteoCon.neutral];
@@ -189,7 +256,7 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
+        legend: { display:false, position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 10 } },
         tooltip: { callbacks: { label: (ctx) => {
           const total = conData.reduce((a,b)=>a+b,0) || 1;
           const val = ctx.parsed;
@@ -205,7 +272,8 @@ function graficar(noticias) {
         cross.connotacion = (cross.connotacion === val) ? null : val;
         actualizarDashboard();
       }
-    }
+    },
+    plugins: [htmlLegendPlugin('legendConnotacion')]
   });
 
   // === Top 5 Fuentes (horizontal; % solo en tooltip) ===
@@ -220,7 +288,7 @@ function graficar(noticias) {
 
     charts.topFuentes = new Chart(document.getElementById('graficoTopFuentes'), {
       type: 'bar',
-      data: { labels, datasets: [{ label: 'Noticias', data: counts, backgroundColor: "#3498db" }] },
+      data: { labels, datasets: [{ label: 'Noticias', data: counts, backgroundColor: "#3b82f6" }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         indexAxis: 'y',
@@ -255,7 +323,7 @@ function graficar(noticias) {
 
     charts.topTemas = new Chart(document.getElementById('graficoTopTemas'), {
       type: 'bar',
-      data: { labels, datasets: [{ label: 'Noticias', data: counts, backgroundColor: "#9b59b6" }] },
+      data: { labels, datasets: [{ label: 'Noticias', data: counts, backgroundColor: "#8b5cf6" }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         indexAxis: 'y',
@@ -293,9 +361,9 @@ function graficar(noticias) {
   const pctNeg = fechas.map(f => porFecha[f].total ? +(porFecha[f].neg/porFecha[f].total*100).toFixed(2) : 0);
   const pctNeu = fechas.map(f => porFecha[f].total ? +(porFecha[f].neu/porFecha[f].total*100).toFixed(2) : 0);
 
-  const colorPos = cross.dateKey ? dimColor("#2ecc71", 0.6) : "#2ecc71";
-  const colorNeu = cross.dateKey ? dimColor("#95a5a6", 0.6) : "#95a5a6";
-  const colorNeg = cross.dateKey ? dimColor("#e74c3c", 0.6) : "#e74c3c";
+  const colorPos = cross.dateKey ? dimColor("#10b981", 0.6) : "#10b981";
+  const colorNeu = cross.dateKey ? dimColor("#94a3b8", 0.6) : "#94a3b8";
+  const colorNeg = cross.dateKey ? dimColor("#ef4444", 0.6) : "#ef4444";
 
   charts.temporal = new Chart(document.getElementById("graficoTemporal"), {
     type: 'bar',
@@ -310,8 +378,8 @@ function graficar(noticias) {
     options: {
       responsive: true, maintainAspectRatio: false, resizeDelay: 50,
       plugins: {
+        legend: { display:false },
         tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%` } },
-        legend: { display: true, labels: { font: { size: 11 }, padding: 10 } }
       },
       layout: { padding: 0 },
       scales: {
@@ -326,10 +394,11 @@ function graficar(noticias) {
         cross.dateKey = (cross.dateKey === val) ? null : val;
         actualizarDashboard();
       }
-    }
+    },
+    plugins: [htmlLegendPlugin('legendTemporal', true)]
   });
 
-  // === Polaridad promedio por fecha (línea −1..1, centrada incluso con 1 punto) ===
+  // === Polaridad promedio por fecha (línea −1..1) ===
   const polPorFecha = {};
   noticias.forEach(n => {
     const key = keyForGroup(n.Fecha, groupBy);
@@ -346,7 +415,7 @@ function graficar(noticias) {
   const minX = -0.5;
   const maxX = (npts === 1) ? 0.5 : (npts - 0.5);
 
-  const lineColor = cross.dateKey ? dimColor("#8e44ad", 0.6) : "#8e44ad";
+  const lineColor = cross.dateKey ? dimColor("#8b5cf6", 0.6) : "#8b5cf6";
 
   charts.polaridadProm = new Chart(document.getElementById("graficoPolaridadProm"), {
     type: 'line',
@@ -380,7 +449,7 @@ function graficar(noticias) {
         },
         y: { suggestedMin: -1, suggestedMax: 1 }
       },
-      plugins: { legend: { labels: { font: { size: 11 }, padding: 10 } } },
+      plugins: { legend: { display:false } },
       layout: { padding: 0 }
     }
   });

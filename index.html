@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,8 +9,13 @@
 </head>
 <body>
   <header>
-    <h1>📊 Dashboard de Noticias</h1>
-    <p>Filtros globales y cruzados — layout responsive</p>
+    <div class="header-row">
+      <div>
+        <h1>📊 Dashboard de Noticias</h1>
+        <p>Filtros globales y cruzados — layout responsive</p>
+      </div>
+      <button id="themeToggle" type="button" aria-label="Cambiar tema">☀️ Claro</button>
+    </div>
   </header>
 
   <section id="filtros">
@@ -39,6 +44,7 @@
       <select id="groupBy">
         <option value="day" selected>Día</option>
         <option value="week">Semana</option>
+        <option value="month">Mes</option>
       </select>
     </div>
 
@@ -74,10 +80,12 @@
     <div class="grafico-container">
       <h2>Relevancia</h2>
       <canvas id="graficoRelevancia"></canvas>
+      <div id="legendRelevancia" class="legend"></div>
     </div>
     <div class="grafico-container">
       <h2>Connotación (según polaridad y umbral)</h2>
       <canvas id="graficoConnotacion"></canvas>
+      <div id="legendConnotacion" class="legend"></div>
     </div>
     <div class="grafico-container">
       <h2>Top 5 Fuentes</h2>
@@ -90,6 +98,7 @@
     <div class="grafico-container">
       <h2>Tendencia por polaridad (% por fecha)</h2>
       <canvas id="graficoTemporal"></canvas>
+      <div id="legendTemporal" class="legend"></div>
     </div>
     <div class="grafico-container">
       <h2>Polaridad promedio por fecha (−1 a 1)</h2>
