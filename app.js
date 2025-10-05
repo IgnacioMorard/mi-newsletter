@@ -1,6 +1,7 @@
 let noticiasGlobal = [];
 let charts = {};
 const cross = { connotacion: null, relevancia: null, dateKey: null };
+const state = { page: 1, pageSize: 20, lastList: [] };
 
 // === THEME toggle (dark default) ===
 function initTheme(){
@@ -16,7 +17,7 @@ function initTheme(){
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
         btn.textContent = next === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
-        actualizarDashboard(); // re-render for axis/legend contrast
+        actualizarDashboard(); // re-render para contraste
       };
     }
   }catch(e){ console.warn('Theme init error', e); }
@@ -38,12 +39,12 @@ function normRelevancia(v){
   return 'baja';
 }
 
-// Read CSS variables to style axes in charts
+// CSS vars
 function cssVar(name){
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-// Agrupación por día, semana, mes
+// Agrupar por día/semana/mes
 function keyForGroup(dateStr, groupBy){
   if (!dateStr) return '';
   if (groupBy === 'day') return dateStr;
@@ -116,7 +117,8 @@ function aplicarFiltros() {
   return aplicarCrossFilters(base);
 }
 
-function renderNoticias(noticias) {
+// ==== Noticias paginadas ===
+function renderNoticiasCards(noticias) {
   const contenedor = document.getElementById("noticias");
   contenedor.innerHTML = "";
   noticias.forEach(n => {
@@ -129,6 +131,34 @@ function renderNoticias(noticias) {
     `;
     contenedor.appendChild(card);
   });
+}
+
+function updateNewsControls(){
+  const wrap = document.getElementById('newsControls');
+  const total = state.lastList.length;
+  const shown = Math.min(state.page * state.pageSize, total);
+  wrap.innerHTML = "";
+
+  const info = document.createElement('div');
+  info.textContent = total ? `Mostrando ${shown} de ${total}` : "Sin noticias";
+  wrap.appendChild(info);
+
+  if (shown < total){
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.textContent = 'Cargar más';
+    btn.onclick = () => {
+      state.page += 1;
+      renderNoticiasPaged();
+    };
+    wrap.appendChild(btn);
+  }
+}
+
+function renderNoticiasPaged(){
+  const subset = state.lastList.slice(0, state.page * state.pageSize);
+  renderNoticiasCards(subset);
+  updateNewsControls();
 }
 
 function destruirGraficos(){
@@ -184,6 +214,7 @@ function htmlLegendPlugin(containerId, byDataset=false){
         const tx = document.createElement('span');
         tx.textContent = item.text;
         btn.appendChild(tx);
+        // toggle visibilidad del segmento/dataset
         btn.onclick = () => {
           if (byDataset){
             const vis = chart.isDatasetVisible(item.datasetIndex);
@@ -206,7 +237,7 @@ function graficar(noticias) {
   const tickColor = cssVar('--ink-soft') || '#cbd5e1';
   const gridColor = cssVar('--grid') || '#1f2937';
 
-  // Relevancia (pie)
+  // Relevancia (pie) + cross-filter onClick
   const conteoRel = { alta: 0, media: 0, baja: 0 };
   const coloresRel = { alta: "#ef4444", media: "#f59e0b", baja: "#10b981" };
   noticias.forEach(n => {
@@ -232,12 +263,19 @@ function graficar(noticias) {
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
+      },
+      onClick: (evt, elements) => {
+        if (!elements.length) { cross.relevancia = null; actualizarDashboard(); return; }
+        const idx = elements[0].index;
+        const label = relLabels[idx];
+        cross.relevancia = (cross.relevancia === label) ? null : label;
+        actualizarDashboard();
       }
     },
     plugins: [htmlLegendPlugin('legendRelevancia')]
   });
 
-  // Connotación (pie)
+  // Connotación (pie) + cross-filter onClick
   const conteoCon = { positiva: 0, negativa: 0, neutral: 0 };
   const coloresCon = { positiva:"#10b981", negativa:"#ef4444", neutral:"#94a3b8" };
   noticias.forEach(n => { conteoCon[n._signo]++; });
@@ -260,6 +298,13 @@ function graficar(noticias) {
           const pct = (val/total*100).toFixed(1);
           return `${ctx.label}: ${val} (${pct}%)`;
         }} },
+      },
+      onClick: (evt, elements) => {
+        if (!elements.length) { cross.connotacion = null; actualizarDashboard(); return; }
+        const idx = elements[0].index;
+        const label = conLabels[idx];
+        cross.connotacion = (cross.connotacion === label) ? null : label;
+        actualizarDashboard();
       }
     },
     plugins: [htmlLegendPlugin('legendConnotacion')]
@@ -370,9 +415,9 @@ function graficar(noticias) {
       },
       layout: { padding: 0 },
       scales: {
-        x: { stacked: true, ticks: { autoSkip: true, maxTicksLimit: 8, color: tickColor }, grid:{ color: gridColor } },
+        x: { stacked: true, ticks: { autoSkip: true, maxTicksLimit: 8, color: cssVar('--ink-soft') }, grid:{ color: cssVar('--grid') } },
         y: { stacked: true, beginAtZero: true, max: 100,
-             ticks: { callback: (v) => v + "%", color: tickColor }, grid:{ color: gridColor } }
+             ticks: { callback: (v) => v + "%", color: cssVar('--ink-soft') }, grid:{ color: cssVar('--grid') } }
       },
       onClick: (evt, elements) => {
         if (!elements.length) { cross.dateKey = null; actualizarDashboard(); return; }
@@ -423,7 +468,7 @@ function graficar(noticias) {
           min: minX,
           max: maxX,
           ticks: {
-            color: tickColor,
+            color: cssVar('--ink-soft'),
             callback: (value) => {
               const i = Math.round(value);
               return (i >= 0 && i < labelsPol.length) ? labelsPol[i] : '';
@@ -433,7 +478,7 @@ function graficar(noticias) {
           },
           grid: { display: false }
         },
-        y: { suggestedMin: -1, suggestedMax: 1, ticks:{ color: tickColor }, grid:{ color: gridColor } }
+        y: { suggestedMin: -1, suggestedMax: 1, ticks:{ color: cssVar('--ink-soft') }, grid:{ color: cssVar('--grid') } }
       },
       plugins: { legend: { display:false } },
       layout: { padding: 0 }
@@ -465,7 +510,9 @@ function cargarFiltros(noticias) {
 
 function actualizarDashboard() {
   const filtradas = aplicarFiltros();
-  renderNoticias(filtradas);
+  state.lastList = filtradas;
+  state.page = 1; // reset paging
+  renderNoticiasPaged();
   calcKPIs(filtradas);
   graficar(filtradas);
 }
