@@ -2268,5 +2268,965 @@
     "Polaridad": -0.917,
     "Fuente": "ambito.com",
     "Tema": "economia"
+  },
+  {
+    "Título": "La previa a las elecciones.Para el mercado, la inflación cruzó el 2% en septiembre y no perforará ese piso hasta enero",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/para-el-mercado-la-inflacion-cruzo-el-2-en-septiembre-y-no-perforara-ese-piso-hasta-enero-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.75,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "\"Discusiones productivas\".Caputo se reunió con Bessent para avanzar en el auxilio financiero del Tesoro",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/caputo-se-reunio-con-bessent-para-avanzar-en-el-auxilio-financiero-del-tesoro-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "positiva",
+    "Polaridad": 0.219,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Dolarización.Cuántas personas se sumaron a una de las grandes apuestas del Gobierno",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/se-adhirieron-12702-personas-al-regimen-simplificado-de-ganancias-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.833,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Tensión cambiaria.No cede la demanda minorista de dólares, pero hay un dato que tranquiliza",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/no-cede-la-demanda-minorista-de-dolares-pero-hay-un-dato-que-tranquiliza-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.455,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Un cambio clave.El riesgo país se dejará de reportar en tiempo real en la Argentina",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/un-cambio-clave-el-riesgo-pais-se-dejara-de-reportar-en-tiempo-real-en-la-argentina-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": -0.2,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Con el 99,99% de adhesión.Los acreedores de Loma Negra aprobaron el plan que permitirá el ingreso de Marcelo Mindlin",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/negocios/los-acreedores-de-loma-negra-aprobaron-el-plan-que-permitira-el-ingreso-de-marcelo-mindlin-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": 0.1,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Tensión cambiaria.El dólar arrancó la semana estable y analistas advierten de la presencia del Tesoro",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/dolar/tension-cambiaria-el-dolar-arranca-la-semana-estable-pero-analistas-advierten-de-la-presencia-del-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.818,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Factura impaga.El Gobierno acumula una deuda millonaria para sostener el superávit fiscal",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/el-gobierno-acumula-una-deuda-millonaria-con-empresas-de-gas-para-sostener-el-superavit-fiscal-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.583,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Acuerdo clave.YPF da un nuevo paso importante para el desarrollo del GNL argentino",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/ypf-da-un-nuevo-paso-importante-para-el-desarrollo-del-gnl-argentino-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "neutral",
+    "Polaridad": -0.143,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "De la bohemia a la inversión.Tres espacios donde la cultura se vuelve modelo de negocios",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/negocios/tres-espacios-donde-la-cultura-se-vuelve-modelo-de-negocios-nid06102025/",
+    "Relevancia": "baja",
+    "Connotacion": "positiva",
+    "Polaridad": 0.306,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "\"La industria no para de crecer\".Manuel García Cuerva asume como CEO en GoJiraf y la firma se expande en la región",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/negocios/manuel-garcia-cuerva-asume-como-ceo-en-gojiraf-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "positiva",
+    "Polaridad": 0.667,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Mercados.Anticipan volatilidad financiera hasta el 26 de octubre, más allá de los anuncios",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/anticipan-volatilidad-financiera-hasta-el-26-de-octubre-mas-alla-de-los-anuncios-nid05102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.462,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Controversia: la cámara de inmobiliarias rurales pidió “la desestimación” de un anteproyecto que generó revuelo en Buenos Aires",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/controversia-la-camara-de-inmobiliarias-rurales-pidio-la-desestimacion-de-un-anteproyecto-que-genero-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.4,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "“Queremos transitar, no nadar”.Fuerte tractorazo de productores contra un intendente bonaerense",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/queremos-transitar-no-nadar-fuerte-tractorazo-de-productores-contra-un-intendente-bonaerense-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.692,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "“Es imposible trabajar”.La amenaza de cada fin de semana que tiene en vilo a una región",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/es-imposible-trabajar-la-amenaza-de-cada-fin-de-semana-que-tiene-en-vilo-a-una-region-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.679,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "De acuerdo a un informe.Esta es la provincia más barata de Argentina para vivir",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/propiedades/casas-y-departamentos/esta-es-la-provincia-mas-barata-de-argentina-para-vivir-en-octubre-2025-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.278,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "propiedades"
+  },
+  {
+    "Título": "Costantini ganó la subasta.Qué pasará con el Jumbo y el shopping  que está sobre la avenida Bullrich en Palermo",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/propiedades/inversiones/que-pasara-con-el-jumbo-y-el-shopping-que-esta-sobre-la-avenida-bullrich-en-palermo-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "positiva",
+    "Polaridad": 0.55,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "propiedades"
+  },
+  {
+    "Título": "La tierra más buscada de Palermo.Costantini se quedó con el terreno de la avenida Bullrich y Cerviño por US$127 millones",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/propiedades/inversiones/costantini-se-quedo-con-el-terreno-mas-buscado-de-palermo-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "neutral",
+    "Polaridad": -0.1,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "propiedades"
+  },
+  {
+    "Título": "Qué pasa con las exportaciones.La producción de autos volvió a cerrar con números positivos",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/autos/la-produccion-de-autos-volvio-a-cerrar-con-numeros-positivos-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.286,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "autos"
+  },
+  {
+    "Título": "Segunda etapa.El Gobierno abrió la convocatoria para que ingresen 50.000 autos sin arancel en 2026",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/autos/el-gobierno-abrio-la-convocatoria-para-que-ingresen-50000-autos-sin-arancel-en-2026-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "neutral",
+    "Polaridad": -0.167,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "autos"
+  },
+  {
+    "Título": "Spotify, Booking, Canva y más.Las aplicaciones de terceros llegan a ChatGPT",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/tecnologia/las-aplicaciones-de-terceros-llegan-a-chatgpt-spotify-booking-canva-y-mas-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "positiva",
+    "Polaridad": 0.812,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "tecnologia"
+  },
+  {
+    "Título": "Paso a paso.Así se puede habilitar Copilot en WhatsApp para escribirle a la IA",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/tecnologia/asi-se-puede-habilitar-copilot-en-whatsapp-para-escribirle-a-la-ia-nid06102025/",
+    "Relevancia": "baja",
+    "Connotacion": "positiva",
+    "Polaridad": 0.417,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "tecnologia"
+  },
+  {
+    "Título": "A examen.Probamos el Silent Hill F: cuando el terror se muda a Japón",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/tecnologia/probamos-el-silent-hill-f-cuando-el-terror-se-muda-a-japon-nid06102025/",
+    "Relevancia": "baja",
+    "Connotacion": "positiva",
+    "Polaridad": 0.476,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "tecnologia"
+  },
+  {
+    "Título": "Bitcoin hoy: la cotización al 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/IA/bitcoin-hoy-la-cotizacion-al-6-de-octubre-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": 0.0,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Criptomonedas hoy: cotización de las principales divisas digitales al 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/IA/criptomonedas-hoy-cotizacion-de-las-principales-divisas-digitales-al-6-de-octubre-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.591,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Ethereum hoy: la cotización al 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/IA/ethereum-hoy-la-cotizacion-al-6-de-octubre-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": -0.062,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Suma adicional.De cuánto es el bono para los jubilados de la Anses en octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/de-cuanto-es-el-bono-para-los-jubilados-de-la-anses-en-octubre-2025-nid03102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.714,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Alarma.Qué advirtió el Wall Street Journal sobre el peso argentino",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/que-advirtio-el-wall-street-journal-sobre-el-peso-argentino-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.682,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Euro hoy en Argentina: a cuánto cotiza la moneda hoy lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/dolar/euro-hoy-en-argentina-a-cuanto-cotiza-la-moneda-hoy-lunes-6-de-octubre-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -1.0,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Cuál es la cotizacion del dólar hoy, 6 de octubre, banco por banco",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/dolar/cual-es-la-cotizacion-del-dolar-hoy-6-de-octubre-banco-por-banco-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.333,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Denuncia judicial.Un diputado nacional pidió investigar a Luis Caputo y a Juan Pazo por la suspensión de las retenciones",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/denuncia-judicial-un-diputado-nacional-pidio-investigar-a-luis-caputo-y-a-juan-pazo-por-la-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -1.0,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Gestión crucial.La Argentina pidió a la Unión Europea ser considerada de riesgo bajo en deforestación",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/gestion-crucial-la-argentina-pidio-a-la-union-europea-ser-considerada-de-riesgo-bajo-en-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "positiva",
+    "Polaridad": 0.375,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Investigación.Evaluaron el riego por goteo enterrado con energía solar y el resultado fue sorprendente",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/investigacion-evaluaron-el-riego-por-goteo-enterrado-con-energia-solar-y-el-resultado-fue-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": 0.048,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Pulverizador.Así opera el avión autónomo más grande del mundo que podría llegar pronto a la Argentina",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/pulverizador-asi-opera-el-avion-autonomo-mas-grande-del-mundo-que-podria-llegar-pronto-a-la-nid06102025/",
+    "Relevancia": "media",
+    "Connotacion": "positiva",
+    "Polaridad": 0.5,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Cambio inminente.OpenAI lanza un informe que identifica las 44 profesiones que podrían ser reemplazadas por la inteligencia artificial",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/IA/openai-lanza-un-informe-que-identifica-las-44-profesiones-que-podrian-ser-reemplazadas-por-la-nid06102025/",
+    "Relevancia": "baja",
+    "Connotacion": "neutral",
+    "Polaridad": -0.05,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Ya se usa en Estados Unidos.Una revolucionaria técnica soluciona un problema histórico en las explotaciones lecheras argentinas",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/campo/ya-se-usa-en-eeuu-una-revolucionaria-tecnica-soluciona-un-problema-historico-en-las-explotaciones-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": 0.167,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Minuto a minuto.A cuánto cotiza el dólar oficial y blue este lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/dolar/dolar-hoy-dolar-blue-hoy-a-cuanto-cotiza-este-lunes-6-de-octubre-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.31,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Dólar tarjeta hoy: a cuánto cotiza el dólar turista el 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/dolar/dolar-tarjeta-hoy-a-cuanto-cotiza-el-dolar-turista-el-6-de-octubre-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.667,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Dólar blue hoy: a cuánto cotiza el lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.lanacion.com.ar/economia/dolar/dolar-blue-hoy-a-cuanto-cotiza-el-lunes-6-de-octubre-nid06102025/",
+    "Relevancia": "alta",
+    "Connotacion": "positiva",
+    "Polaridad": 0.3,
+    "Fuente": "lanacion.com.ar",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Sigue la sangría de dólares: estiman que el Tesoro hoy vendió más de US$ 400 millones",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/sigue-la-sangria-de-dolares-estiman-que-el-tesoro-vendio-mas-de-us-400-millones.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.773,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "El déficit comercial con Brasil supera los US$ 4.700 millones en lo que va de 2025",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/el-deficit-comercial-con-brasil-supera-los-us-4700-millones-en-lo-que-va-de-2025.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "negativa",
+    "Polaridad": -0.417,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Cuáles fueron los 10 autos usados más vendidos en septiembre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/nea/cuales-fueron-los-10-autos-usados-mas-vendidos-en-septiembre.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "positiva",
+    "Polaridad": 0.5,
+    "Fuente": "perfil.com",
+    "Tema": "nea"
+  },
+  {
+    "Título": "Ammiraglia Desarrollistas inauguró BUENAVISTA III en Villa Carlos Paz: un hito que combina lujo, sostenibilidad y comunidad",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/cordoba/ammiraglia-desarrollistas-inauguro-buenavista-iii-en-villacarlos-paz-un-hito-que-combina-lujo-sostenibilidad-y-comunidad.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "positiva",
+    "Polaridad": 0.833,
+    "Fuente": "perfil.com",
+    "Tema": "cordoba"
+  },
+  {
+    "Título": "Lagarde dijo que el Banco Central Europeo cumple su meta y mejora el panorama",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/bloomberg/bc-lagarde-dice-que-el-bce-cumple-su-meta-y-mejora-el-panorama.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": 0.0,
+    "Fuente": "perfil.com",
+    "Tema": "bloomberg"
+  },
+  {
+    "Título": "Scott Bessent recibió a Luis Caputo para negociar los detalles del salvataje financiero",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/scott-bessent-recibio-a-luis-caputo-para-negociar-los-detalles-del-salvataje-financiero.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.278,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "A cuánto estarán la inflación y el dólar a fin de año según las consultoras que releva el Banco Central",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/a-cuanto-estara-la-inflacion-y-el-dolar-a-fin-de-ano-segun-las-consultoras-que-releva-el-banco-central.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.7,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "\"Un swap por otro swap\": Caputo busca respaldo en EE.UU. para enfrentar la crisis cambiaria",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/canal-e/un-swap-por-otro-swap-caputo-busca-respaldo-en-eeuu-para-enfrentar-la-crisis-cambiaria.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.643,
+    "Fuente": "perfil.com",
+    "Tema": "canal-e"
+  },
+  {
+    "Título": "¿Cómo será el operativo de ARCA sobre los monotributistas?",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/como-sera-el-operativo-de-arca-sobre-los-a30-monotributistas.phtml",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.714,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "El \"comercio de devaluación\" impulsa el oro y al Bitcoin mientras las monedas se desploman",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/bloomberg/bc-el-comercio-de-devaluacion-impulsa-el-oro-y-el-bitcoin-mientras-las-monedas-se-desploman.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.214,
+    "Fuente": "perfil.com",
+    "Tema": "bloomberg"
+  },
+  {
+    "Título": "Expectativa en los mercados ante la reunión de Luis Caputo con Scott Bessent en Washington",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/expectativa-en-los-mercados-ante-la-reunion-de-luis-caputo-con-scott-bessent-en-washington.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.5,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "A cuánto cerró el euro blue hoy, lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/a-cuanto-cerro-el-euro-blue-hoy-lunes-6-de-octubre.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -1.0,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "A cuánto cerró el dólar blue hoy este lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/a-cuanto-cerro-el-dolar-blue-hoy-este-lunes-6-de-octubre.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -1.0,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "JP Morgan deja de informar el Riesgo País de Argentina en tiempo real",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/jp-morgan-deja-de-medir-el-riesgo-pais-de-argentina-en-tiempo-real.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.4,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Acciones de Tesla suben tras publicaciones crípticas que anticipan presentación de producto",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/bloomberg/bc-acciones-de-tesla-suben-tras-publicaciones-cripticas-que-anticipan-presentacion-de-producto.phtml",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -1.0,
+    "Fuente": "perfil.com",
+    "Tema": "bloomberg"
+  },
+  {
+    "Título": "Argentinos van a Chile a gastar los dólares que Milei necesita con desesperación",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/bloomberg/bc-argentinos-van-a-chile-a-gastar-los-dolares-que-milei-necesita-con-desesperacion.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.441,
+    "Fuente": "perfil.com",
+    "Tema": "bloomberg"
+  },
+  {
+    "Título": "Riesgo País hoy 6 de octubre de 2025: fuerte caída a 1.080 puntos por expectativa de auxilio financiero",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/el-riesgo-pais-en-argentina-hoy-lunes-6-de-octubre-de-2025-a35.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.318,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Diego Giacomini: “Milei y Espert buscaron en la política lo que no obtuvieron en el sector privado”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/modo-fontevecchia/diego-giacomini-milei-y-espert-buscaron-en-la-politica-lo-que-no-obtuvieron-en-el-sector-privado-modof.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.518,
+    "Fuente": "perfil.com",
+    "Tema": "modo-fontevecchia"
+  },
+  {
+    "Título": "El impacto del shutdown en Estados Unidos sobre los mercados: “Es raro que estemos en máximos históricos”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/canal-e/el-impacto-del-shutdown-en-estados-unidos-sobre-los-mercados-es-raro-que-estemos-en-maximos-historicos.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.833,
+    "Fuente": "perfil.com",
+    "Tema": "canal-e"
+  },
+  {
+    "Título": "Repercusiones de la crisis política: “El mercado está en un modo muy defensivo”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/canal-e/repercusiones-crisis-politica-el-mercado-esta-en-un-modo-muy-defensivo.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.667,
+    "Fuente": "perfil.com",
+    "Tema": "canal-e"
+  },
+  {
+    "Título": "El supermercadismo mayorista advierte que el aumento de costos laborales podría trasladarse a precios",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/el-supermercadismo-mayorista-advierte-que-el-aumento-de-costos-laborales-podria-trasladarse-a-precios.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.85,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "La siembra de girasol como nueva oportunidad: “Es el mejor plan B que hay a nivel global”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/canal-e/siembra-de-girasol-como-nueva-oportunidad-es-el-mejor-plan-b-que-hay-a-nivel-global.phtml",
+    "Relevancia": "media",
+    "Connotacion": "positiva",
+    "Polaridad": 0.333,
+    "Fuente": "perfil.com",
+    "Tema": "canal-e"
+  },
+  {
+    "Título": "En Chaco, la mitad de los asalariados trabaja en la informalidad y el NEA concentra los niveles más altos del país",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/nea/en-chaco-la-mitad-de-los-asalariados-trabaja-en-la-informalidad-y-el-nea-concentra-los-niveles-mas-altos-del-pais.phtml",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.357,
+    "Fuente": "perfil.com",
+    "Tema": "nea"
+  },
+  {
+    "Título": "El dólar en Córdoba: a cuánto cotiza este lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/cordoba/cordoba-dolar-hoy-dolar-blue-hoy-cotizacion-06-de-octubre-06102025.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "negativa",
+    "Polaridad": -0.5,
+    "Fuente": "perfil.com",
+    "Tema": "cordoba"
+  },
+  {
+    "Título": "Orlando Ferreres: “El dólar es uno de los temas que más está salpicando a la situación financiera”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/canal-e/orlando-ferreres-el-dolar-es-uno-de-los-temas-que-mas-esta-salpicando-a-la-situacion-financiera.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.417,
+    "Fuente": "perfil.com",
+    "Tema": "canal-e"
+  },
+  {
+    "Título": "El Banco de Corrientes traslada su Centro Único de Pagos a un nuevo y moderno edificio en avenida Pomar",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/nea/el-banco-de-corrientes-traslada-su-centro-unico-de-pagos-a-un-nuevo-y-moderno-edificio-en-avenida-pomar.phtml",
+    "Relevancia": "media",
+    "Connotacion": "positiva",
+    "Polaridad": 0.875,
+    "Fuente": "perfil.com",
+    "Tema": "nea"
+  },
+  {
+    "Título": "Dólar “caliente”: los tres escenarios que proyecta la city tras el 26-O",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/nea/dolar-caliente-los-tres-escenarios-que-proyecta-la-city-tras-el-26-o.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.833,
+    "Fuente": "perfil.com",
+    "Tema": "nea"
+  },
+  {
+    "Título": "Coparticipación: cómo le fue al NEA en el reparto de recursos entre provincias",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/nea/coparticipacion-como-le-fue-al-nea-en-el-reparto-de-recursos-entre-provincias.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "negativa",
+    "Polaridad": -0.5,
+    "Fuente": "perfil.com",
+    "Tema": "nea"
+  },
+  {
+    "Título": "Sin frenos y endeudándonos llegamos al a-narcocapitalismo",
+    "Fecha": "2025-10-06",
+    "Link": "https://noticias.perfil.com/noticias/economia/sin-frenos-y-endeudanonos-llegamos-al-a-narcocapitalismo.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.917,
+    "Fuente": "noticias.perfil.com",
+    "Tema": "noticias"
+  },
+  {
+    "Título": "“El esquema actual no se sostiene: la demanda de dólares sigue altísima y el financiamiento no aparece”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/cordoba/el-esquema-actual-no-se-sostiene-la-demanda-de-dolares-sigue-altisima-y-el-financiamiento-no-aparece.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.833,
+    "Fuente": "perfil.com",
+    "Tema": "cordoba"
+  },
+  {
+    "Título": "“La lechería argentina sufrió una importante transformación en la incorporación de tecnología”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/canal-e/lecheria-argentina-sufrio-una-importante-transformacion-en-la-incorporacion-de-tecnologia.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "positiva",
+    "Polaridad": 0.25,
+    "Fuente": "perfil.com",
+    "Tema": "canal-e"
+  },
+  {
+    "Título": "Proponen un régimen de beneficios fiscales para impulsar la inversión productiva en la ciudad",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/cordoba/proponen-un-regimen-de-beneficios-fiscales-para-impulsar-la-inversion-productiva-en-la-ciudad.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "positiva",
+    "Polaridad": 0.375,
+    "Fuente": "perfil.com",
+    "Tema": "cordoba"
+  },
+  {
+    "Título": "El gobierno abrió convocatoria para un nuevo cupo de 50 mil vehículos híbridos sin arancel en 2026",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/el-gobierno-abrio-convocatoria-para-un-nuevo-cupo-de-50-mil-vehiculos-hibridos-sin-arancel-en-2026.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.438,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "\"Soy un abanderado de la marca Córdoba\": Péndola abre paso en el debate público y no le esquiva a los debates políticos",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/cordoba/soy-un-abanderado-de-la-marca-cordoba-pendola-abre-paso-en-el-debate-publico-y-no-le-esquiva-a-los-debates-politicos.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": 0.0,
+    "Fuente": "perfil.com",
+    "Tema": "cordoba"
+  },
+  {
+    "Título": "Top 10 personas más ricas del mundo: ¿cómo quedó el ranking al 1° de octubre de 2025?",
+    "Fecha": "2025-10-06",
+    "Link": "https://fortuna.perfil.com/noticias/riqueza/top-10-personas-mas-ricas-del-mundo-como-quedo-el-ranking-al-1-de-octubre-de-2025.phtml",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.25,
+    "Fuente": "fortuna.perfil.com",
+    "Tema": "noticias"
+  },
+  {
+    "Título": "Aumentan un 13,8% las ventas de autos usados en Córdoba: “la gente compra lo que puede, no lo que quiere”",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/cordoba/aumentan-un-138-las-ventas-de-autos-usados-en-cordoba-la-gente-compra-lo-que-puede-no-lo-que-quiere.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.389,
+    "Fuente": "perfil.com",
+    "Tema": "cordoba"
+  },
+  {
+    "Título": "Crece la proyección de siembra de girasol",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/reperfilar/crece-la-proyeccion-de-siembra-de-girasol.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "positiva",
+    "Polaridad": 0.25,
+    "Fuente": "perfil.com",
+    "Tema": "reperfilar"
+  },
+  {
+    "Título": "La bolsa de Tokio saltó con fuerza: quién es Sanae Takaichi y por qué incidió en el aumento de casi 5 puntos del Nikkei",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/la-bolsa-de-tokio-salto-con-fuerza-quien-es-sanae-takaichi-y-por-que-incidio-en-el-aumento-de-casi-5-puntos-del-nikkei.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.357,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "ARBA cambió la fecha de pago del impuesto inmobiliario bonaerense: ¿Hasta cuándo hay tiempo para pagar con descuento?",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/arba-cambio-la-fecha-de-vencimiento-de-la-ultima-cuota-del-impuesto-inmobiliario-hasta-cuando-hay-tiempo-para-pagar-con-descuento.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "negativa",
+    "Polaridad": -0.286,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "El oro volvió a tocar otro máximo histórico y se acerca a los 4000 dólares la onza",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/el-oro-volvio-a-tocar-otro-maximo-historico-y-se-acerca-a-los-4000-dolares-la-onza.phtml",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": -0.083,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "ANSES publicó el cronograma de pagos de octubre 2025: fechas y aumentos confirmados",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.perfil.com/noticias/economia/anses-publico-el-cronograma-de-pagos-de-octubre-2025-fechas-y-aumentos-confirmados.phtml",
+    "Relevancia": "baja",
+    "Connotacion": "negativa",
+    "Polaridad": -0.312,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "A partir de este lunes, suben un 12% los precios del pan y panificados en la provincia de Buenos Aires",
+    "Fecha": "2025-10-05",
+    "Link": "https://www.perfil.com/noticias/economia/a-partir-de-este-lunes-suben-un-12-los-precios-del-pan-y-productos-panificados-en-panaderias-de-la-provincia-de-buenos-aires.phtml",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.25,
+    "Fuente": "perfil.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Georgieva destacó su encuentro con Caputo en EEUU: \"Trabajamos para promover la estabilidad macroeconómica y el crecimiento\"",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/kristalina-georgieva-destaco-su-encuentro-luis-caputo-eeuu-trabajamos-promover-la-estabilidad-macroeconomica-y-el-crecimiento-n6199086",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": -0.143,
+    "Fuente": "ambito.com",
+    "Tema": "kristalina-georgieva-destaco-su-encuentro-luis-caputo-eeuu-trabajamos-promover-la-estabilidad-macroeconomica-y-el-crecimiento-n6199086"
+  },
+  {
+    "Título": "Nuevo déficit comercial con Brasil: en septiembre fue de u$s578 millones, ante fuerte \"rojo\" del sector automotriz",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/nuevo-deficit-comercial-brasil-septiembre-fue-us578-millones-fuerte-rojo-del-sector-automotriz-n6199076",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.714,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Juicios laborales: advierten que con el aumento de la litigiosidad suben costos para las empresas",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/juicios-laborales-advierten-que-el-aumento-la-litigiosidad-suben-costos-las-empresas-n6199021",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.714,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Gurúes de la city prevén que la inflación no bajará del 2% hasta 2026 y ya estiman crecimiento menor al 4% para 2025",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/gurues-del-mercado-preven-que-la-inflacion-no-bajara-del-2-2026-y-ya-estiman-crecimiento-menor-al-4-2025-n6199033",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.5,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Con el nuevo IPC, los salarios registrados acumulan una caída real del 11% bajo la gestión de Milei",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/con-el-nuevo-ipc-los-salarios-registrados-acumulan-una-caida-real-del-11-la-gestion-javier-milei-n6199017",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.444,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Bessent mantuvo un primer encuentro con Caputo y su delegación: discutieron detalles del salvataje financiero",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/scott-bessent-le-da-la-bienvenida-caputo-y-su-delegacion-adelanto-que-seguiran-discutiendo-detalles-del-salvataje-n6199025",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.438,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Los bonos en dólares extendieron buena performance a la espera de novedades sobre el salvataje del Tesoro",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/finanzas/bonos-y-adrs-extienden-repunte-wall-street-mientras-el-mercado-espera-novedades-washington-n6198767",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.85,
+    "Fuente": "ambito.com",
+    "Tema": "finanzas"
+  },
+  {
+    "Título": "Riesgo país: J.P. Morgan excluyó a la Argentina del índice de deuda EMBI+",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/finanzas/riesgo-pais-jp-morgan-excluyo-la-argentina-del-indice-deuda-embi-n6198850",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.833,
+    "Fuente": "ambito.com",
+    "Tema": "finanzas"
+  },
+  {
+    "Título": "LLA pidió la reimpresión de boletas para que Santilli encabece la lista en Buenos Aires",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/politica/la-libertad-avanza-pidio-la-reimpresion-boletas-que-diego-santilli-encabece-la-lista-n6198902",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.643,
+    "Fuente": "ambito.com",
+    "Tema": "politica"
+  },
+  {
+    "Título": "Denunciaron a Milei tras admitir que fue él quien tomó la decisión de poner presa a Cristina",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/politica/denunciaron-javier-milei-admitir-que-fue-el-quien-tomo-la-decision-poner-presa-cristina-kirchner-n6198753",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -1.0,
+    "Fuente": "ambito.com",
+    "Tema": "politica"
+  },
+  {
+    "Título": "Un exasesor de Milei asegura que \"esta vez no es diferente\" y vuelve a la carga por la dolarización",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/un-exasesor-milei-asegura-que-esta-vez-no-es-diferente-y-vuelve-la-carga-la-dolarizacion-n6198881",
+    "Relevancia": "alta",
+    "Connotacion": "negativa",
+    "Polaridad": -0.786,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "¿Bajan las tasas del plazo fijo? Esto pagan los principales bancos si invertís $1.000.000 a 30 días",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/bajan-las-tasas-del-plazo-fijo-esto-pagan-los-principales-bancos-si-invertis-1000000-30-dias-n6198876",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.9,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Negociación por los aranceles: Lula y Trump tuvieron su primera llamada oficial",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/negociacion-los-aranceles-lula-da-silva-y-donald-trump-tuvieron-su-primera-llamada-oficial-n6198873",
+    "Relevancia": "media",
+    "Connotacion": "negativa",
+    "Polaridad": -0.5,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Cuenta DNI confirmó cuándo estará disponible el descuento en carnicerías en octubre 2025: qué días estará disponible",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/cuenta-dni-confirmo-cuando-estara-disponible-el-descuento-carnicerias-octubre-2025-que-dias-estara-disponible-n6197694",
+    "Relevancia": "media",
+    "Connotacion": "neutral",
+    "Polaridad": -0.083,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
+  },
+  {
+    "Título": "Plazo fijo: Este es el banco que paga más intereses este lunes 6 de octubre",
+    "Fecha": "2025-10-06",
+    "Link": "https://www.ambito.com/economia/plazo-fijo-este-es-el-banco-que-paga-mas-intereses-este-lunes-6-octubre-n6198734",
+    "Relevancia": "alta",
+    "Connotacion": "neutral",
+    "Polaridad": -0.083,
+    "Fuente": "ambito.com",
+    "Tema": "economia"
   }
 ]
